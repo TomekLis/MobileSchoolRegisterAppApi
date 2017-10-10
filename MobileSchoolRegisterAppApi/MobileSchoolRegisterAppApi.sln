@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileSchoolRegisterAppApi"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileSchoolRegisterAppApi.Tests", "MobileSchoolRegisterAppApi.Tests\MobileSchoolRegisterAppApi.Tests.csproj", "{854DC1C4-E180-4820-9A7A-85D6BA74BB2F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{A947BFD7-6AD9-474F-BB8E-D615CEFEDB63}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{854DC1C4-E180-4820-9A7A-85D6BA74BB2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{854DC1C4-E180-4820-9A7A-85D6BA74BB2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{854DC1C4-E180-4820-9A7A-85D6BA74BB2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A947BFD7-6AD9-474F-BB8E-D615CEFEDB63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A947BFD7-6AD9-474F-BB8E-D615CEFEDB63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A947BFD7-6AD9-474F-BB8E-D615CEFEDB63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A947BFD7-6AD9-474F-BB8E-D615CEFEDB63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
