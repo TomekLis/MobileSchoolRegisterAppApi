@@ -9,7 +9,8 @@ namespace Repository.Models
     public class Course
     {
         public Course()
-            this.DaySchedules = new List<DaySchedule>();
+        {
+            this.DaySchedules = new HashSet<DaySchedule>();
         }
         [Key]
         public int Id { get; set; }

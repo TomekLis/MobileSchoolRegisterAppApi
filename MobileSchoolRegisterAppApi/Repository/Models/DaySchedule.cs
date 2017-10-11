@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 
 namespace Repository.Models
+{
     public enum Day
     {
         Monday, Tuesday, Wednesday, Thursday, Friday
