@@ -11,7 +11,6 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Repository.Models
 { 
-    //zmiana testowa 2 
     public class Teacher : IdentityUser
     {
         public Teacher()
