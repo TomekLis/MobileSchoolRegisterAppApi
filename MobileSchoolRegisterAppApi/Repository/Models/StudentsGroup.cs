@@ -11,6 +11,7 @@ namespace Repository.Models
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-
-    }
+        [Range(1,8)]
+        public int Grade { get; set; }
+       }
 }
