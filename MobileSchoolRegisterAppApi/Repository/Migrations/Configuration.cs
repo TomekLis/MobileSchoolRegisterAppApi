@@ -28,7 +28,7 @@ namespace Repository.Migrations
             SeedStudentGroups(context);
             SeedCourses(context);
             SeedLessons(context);
-            Seed;
+            SeedStudents(context);
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
@@ -41,6 +41,11 @@ namespace Repository.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+        }
+
+        private void SeedStudents(SchoolRegisterContext context)
+        {
+            throw new NotImplementedException();
         }
 
         private void SeedLessons(SchoolRegisterContext context)
