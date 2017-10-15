@@ -9,7 +9,7 @@ namespace Repository.Models
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int? StudentsGroupId { get; set; }
+        public int StudentsGroupId { get; set; }
         public virtual StudentGroup StudentGroup{ get; set; }
     }
 }

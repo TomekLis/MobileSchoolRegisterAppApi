@@ -29,6 +29,8 @@ namespace Repository.Migrations
             SeedCourses(context);
             SeedLessons(context);
             SeedStudents(context);
+            SeedStudentActivities(context);
+            SeedDaySchedules(context);
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
@@ -43,19 +45,79 @@ namespace Repository.Migrations
             //
         }
 
+        private void SeedDaySchedules(SchoolRegisterContext context)
+        {
+            var CourseId = context.Set<Course>().Where(t => t.Name == "Mathematics for first grade").FirstOrDefault().Id;
+            for (int i = 1; i <= 1; i++)
+            {
+                var daySchedule = new DaySchedule()
+                {
+                    Id = i,
+                    Day = Day.Monday,
+                    StartTime = DateTime.Now,
+                    EndTime = DateTime.Now.AddHours(1),
+                    CourseId = CourseId
+                };
+                context.Set<DaySchedule>().AddOrUpdate(daySchedule);
+            }
+            context.SaveChanges();
+        }
+
+        //TODO: experiment a bit on that(inheritance)
+        private void SeedStudentActivities(SchoolRegisterContext context)
+        {
+            var StudentId = context.Set<Student>().Where(s => s.FirstName == "Andy").FirstOrDefault().Id;
+            var LessonId = context.Set<Lesson>().Where(t => t.Id == 1).FirstOrDefault().Id;
+            for (int i = 1; i <= 1; i++)
+            {
+                var mark = new Mark()
+                {
+                    Id = i,
+                    LessonId = LessonId,
+                    StudentId = StudentId,
+                    MarkValue = MarkValue.A,
+                    Importance = Importance.ClassExam
+                };
+                context.Set<Mark>().AddOrUpdate(mark);
+            }
+            for (int i = 2; i <= 2; i++)
+            {
+                var attendance = new Attendance()
+                {
+                    Id = i,
+                    LessonId = LessonId,
+                    StudentId = StudentId,
+                    WasPresent = true,
+                };
+                context.Set<Attendance>().AddOrUpdate(attendance);
+            }
+            context.SaveChanges();
+        }
         private void SeedStudents(SchoolRegisterContext context)
         {
-            throw new NotImplementedException();
+            var StudentGroupId = context.Set<StudentGroup>().Where(t => t.Name == "First grade").FirstOrDefault().Id;
+            for (int i = 1; i <= 1; i++)
+            {
+                var student = new Student()
+                {
+                    Id = i,
+                    FirstName = "Andy",
+                    LastName = "Novak",
+                    StudentsGroupId =  StudentGroupId
+                };
+                context.Set<Student>().AddOrUpdate(student);
+            }
+            context.SaveChanges();
         }
 
         private void SeedLessons(SchoolRegisterContext context)
         {
-            var CourseId = context.Set<Teacher>().Where(t => t.UserName == "FirstTeacher").FirstOrDefault().Id;
+            var CourseId = context.Set<Course>().Where(t => t.Name == "Mathematics for first grade").FirstOrDefault().Id;
             for (int i = 1; i <= 1; i++)
             {
                 var lesson = new Lesson()
                 {
-                    Id = 1,
+                    Id = i,
                     CourseId = CourseId,
                     Date = DateTime.Today,
                 };
