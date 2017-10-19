@@ -23,20 +23,20 @@ namespace Repository.Repo
             return _db.Students.AsNoTracking();
         }
 
-        public Student GetStudentById(int id)
+        public Student GetStudentById(string id)
         {
             Student student = _db.Students.Find(id);
             return student;
         }
 
-        public void DeleteStudent(int id)
+        public void DeleteStudent(string id)
         {
             DeleteRelatedStudentActivities(id);
             Student student = _db.Students.Find(id);
             _db.Students.Remove(student);
         }
 
-        private void DeleteRelatedStudentActivities(int id)
+        private void DeleteRelatedStudentActivities(string id)
         {
             var list = _db.StudentActivities.Where(sa => sa.StudentId == id);
             foreach (var activity in list)

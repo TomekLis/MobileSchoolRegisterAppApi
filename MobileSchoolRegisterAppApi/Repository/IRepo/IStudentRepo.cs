@@ -10,8 +10,8 @@ namespace Repository.IRepo
     interface IStudentRepo
     {
         IQueryable<Student> GetStudents();
-        Student GetStudentById(int id);
-        void DeleteStudent(int id);
+        Student GetStudentById(string id);
+        void DeleteStudent(string id);
         void SaveChanges();
         void AddStudent(Student student);
         void EditStudent(Student student);

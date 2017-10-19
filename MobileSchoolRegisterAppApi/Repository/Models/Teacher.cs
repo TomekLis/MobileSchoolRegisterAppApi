@@ -11,15 +11,12 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Repository.Models
 { 
-    public class Teacher : IdentityUser
+    public class Teacher : User
     {
         public Teacher()
         {
             this.Courses = new HashSet<Course>();
         }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-
         [NotMapped]
         public string FullName => FirstName + " " + LastName;
 

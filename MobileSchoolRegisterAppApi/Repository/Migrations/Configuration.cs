@@ -21,8 +21,8 @@ namespace Repository.Migrations
         protected override void Seed(Models.Contexts.SchoolRegisterContext context)
         {
             // Uncomment to debug Seed method
-            // if (System.Diagnostics.Debugger.IsAttached == false)
-            //    System.Diagnostics.Debugger.Launch();
+            //if (System.Diagnostics.Debugger.IsAttached == false)
+                //System.Diagnostics.Debugger.Launch();
 
             SeedTeachers(context);
             SeedStudentGroups(context);
@@ -96,18 +96,13 @@ namespace Repository.Migrations
         private void SeedStudents(SchoolRegisterContext context)
         {
             var StudentGroupId = context.Set<StudentGroup>().Where(t => t.Name == "First grade").FirstOrDefault().Id;
-            for (int i = 1; i <= 1; i++)
+            var store = new UserStore<Student>(context);
+            var manager = new UserManager<Student>(store);
+            if (!context.Users.Any(u => u.UserName == "FirstStudent"))
             {
-                var student = new Student()
-                {
-                    Id = i,
-                    FirstName = "Andy",
-                    LastName = "Novak",
-                    StudentsGroupId =  StudentGroupId
-                };
-                context.Set<Student>().AddOrUpdate(student);
+                var user = new Student() { UserName = "FirstStudent", FirstName = "Andy", LastName = "Kowalski", StudentsGroupId = StudentGroupId};
+                var adminresult = manager.Create(user, "1234Abc");
             }
-            context.SaveChanges();
         }
 
         private void SeedLessons(SchoolRegisterContext context)
