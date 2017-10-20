@@ -16,6 +16,8 @@ using Microsoft.Owin.Security.OAuth;
 using MobileSchoolRegisterAppApi.Models;
 using MobileSchoolRegisterAppApi.Providers;
 using MobileSchoolRegisterAppApi.Results;
+using Repository.Models;
+using Repository.Models.Views;
 
 namespace MobileSchoolRegisterAppApi.Controllers
 {
@@ -250,7 +252,7 @@ namespace MobileSchoolRegisterAppApi.Controllers
                 return new ChallengeResult(provider, this);
             }
 
-            ApplicationUser user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider,
+            User user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider,
                 externalLogin.ProviderKey));
 
             bool hasRegistered = user != null;
@@ -328,7 +330,7 @@ namespace MobileSchoolRegisterAppApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new User() { UserName = model.Email, Email = model.Email };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
@@ -357,7 +359,7 @@ namespace MobileSchoolRegisterAppApi.Controllers
                 return InternalServerError();
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new User() { UserName = model.Email, Email = model.Email };
 
             IdentityResult result = await UserManager.CreateAsync(user);
             if (!result.Succeeded)

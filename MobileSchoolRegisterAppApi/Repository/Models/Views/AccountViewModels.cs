@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace MobileSchoolRegisterAppApi.Models
+namespace Repository.Models.Views
 {
     // Models returned by AccountController actions.
 
