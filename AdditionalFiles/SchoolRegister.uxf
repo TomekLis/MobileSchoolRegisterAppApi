@@ -4,7 +4,7 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>161</x>
+      <x>154</x>
       <y>231</y>
       <w>126</w>
       <h>63</h>
@@ -16,19 +16,19 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>119</x>
-      <y>175</y>
-      <w>105</w>
-      <h>70</h>
+      <x>84</x>
+      <y>154</y>
+      <w>133</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;130.0;80.0</additional_attributes>
+    <additional_attributes>10.0;10.0;170.0;110.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>56</x>
-      <y>77</y>
+      <x>21</x>
+      <y>56</y>
       <w>147</w>
       <h>105</h>
     </coordinates>
@@ -46,20 +46,20 @@ AccessFailedCount: int</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>280</x>
+      <x>273</x>
       <y>252</y>
-      <w>112</w>
+      <w>133</w>
       <h>35</h>
     </coordinates>
     <panel_attributes>m1=1..n
 m2=1
 teaches &gt;</panel_attributes>
-    <additional_attributes>140.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>170.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>378</x>
+      <x>392</x>
       <y>231</y>
       <w>168</w>
       <h>42</h>
@@ -73,7 +73,7 @@ Name: string</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>378</x>
+      <x>392</x>
       <y>357</y>
       <w>168</w>
       <h>56</h>
@@ -88,7 +88,7 @@ Room: string</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>448</x>
+      <x>462</x>
       <y>266</y>
       <w>91</w>
       <h>105</h>
@@ -102,7 +102,7 @@ is assigned to v
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>392</x>
+      <x>406</x>
       <y>91</y>
       <w>147</w>
       <h>77</h>
@@ -118,23 +118,23 @@ EndTime: DateTime</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>455</x>
+      <x>469</x>
       <y>161</y>
-      <w>84</w>
+      <w>98</w>
       <h>84</h>
     </coordinates>
     <panel_attributes>
 
 m1=0..n
 m2=1
-is tought on ^
+takes place on ^
 </panel_attributes>
     <additional_attributes>10.0;10.0;10.0;100.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>378</x>
+      <x>392</x>
       <y>476</y>
       <w>175</w>
       <h>77</h>
@@ -150,7 +150,7 @@ Age: int</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>448</x>
+      <x>462</x>
       <y>406</y>
       <w>84</w>
       <h>84</h>
@@ -163,7 +163,7 @@ is enrolled to ^</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>644</x>
+      <x>637</x>
       <y>231</y>
       <w>189</w>
       <h>70</h>
@@ -177,21 +177,21 @@ Date: DateTime</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>539</x>
+      <x>553</x>
       <y>252</y>
-      <w>119</w>
+      <w>98</w>
       <h>35</h>
     </coordinates>
     <panel_attributes>m1=0..n
 m2=1
 has &gt;
 </panel_attributes>
-    <additional_attributes>150.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>120.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>700</x>
+      <x>693</x>
       <y>294</y>
       <w>49</w>
       <h>203</h>
@@ -204,7 +204,7 @@ has v</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>644</x>
+      <x>637</x>
       <y>483</y>
       <w>119</w>
       <h>42</h>
@@ -217,7 +217,7 @@ Id: int</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>721</x>
+      <x>735</x>
       <y>546</y>
       <w>98</w>
       <h>49</h>
@@ -230,18 +230,18 @@ WasPresent: bool</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>721</x>
+      <x>714</x>
       <y>518</y>
-      <w>28</w>
+      <w>49</w>
       <h>42</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;20.0;40.0</additional_attributes>
+    <additional_attributes>10.0;10.0;50.0;40.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>693</x>
+      <x>686</x>
       <y>518</y>
       <w>49</w>
       <h>42</h>
@@ -252,7 +252,7 @@ WasPresent: bool</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>609</x>
+      <x>602</x>
       <y>546</y>
       <w>105</w>
       <h>49</h>
@@ -266,31 +266,31 @@ Importance: Importance</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>546</x>
+      <x>560</x>
       <y>497</y>
-      <w>112</w>
+      <w>91</w>
       <h>35</h>
     </coordinates>
     <panel_attributes>m1=0..n
 m2=1
 performs &gt;</panel_attributes>
-    <additional_attributes>140.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>110.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>119</x>
-      <y>175</y>
-      <w>273</w>
-      <h>350</h>
+      <x>84</x>
+      <y>154</y>
+      <w>322</w>
+      <h>371</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;110.0;10.0;480.0;370.0;480.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;510.0;440.0;510.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>637</x>
+      <x>630</x>
       <y>77</y>
       <w>98</w>
       <h>91</h>
@@ -309,7 +309,7 @@ Friday
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>735</x>
+      <x>728</x>
       <y>77</y>
       <w>84</w>
       <h>105</h>
@@ -328,7 +328,7 @@ F</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>819</x>
+      <x>812</x>
       <y>77</y>
       <w>84</w>
       <h>84</h>
@@ -345,8 +345,8 @@ Quiz</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>280</x>
-      <y>105</y>
+      <x>301</x>
+      <y>84</y>
       <w>98</w>
       <h>49</h>
     </coordinates>
@@ -359,14 +359,15 @@ Name: string</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>196</x>
-      <y>119</y>
-      <w>98</w>
+      <x>161</x>
+      <y>98</y>
+      <w>154</w>
       <h>35</h>
     </coordinates>
     <panel_attributes>m1=1..n
 m2=1..n
-has &gt;</panel_attributes>
-    <additional_attributes>120.0;20.0;10.0;20.0</additional_attributes>
+has &gt;
+&lt; is assigned to</panel_attributes>
+    <additional_attributes>200.0;20.0;10.0;20.0</additional_attributes>
   </element>
 </diagram>
