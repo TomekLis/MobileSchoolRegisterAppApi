@@ -141,9 +141,6 @@ takes place on ^
     </coordinates>
     <panel_attributes>_Student_
 --
-Id: int
-FirstName: string 
-LastName: string
 Age: int</panel_attributes>
     <additional_attributes/>
   </element>
@@ -366,7 +363,6 @@ Name: string</panel_attributes>
     </coordinates>
     <panel_attributes>m1=1..n
 m2=1..n
-has &gt;
 &lt; is assigned to</panel_attributes>
     <additional_attributes>200.0;20.0;10.0;20.0</additional_attributes>
   </element>
