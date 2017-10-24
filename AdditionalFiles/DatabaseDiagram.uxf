@@ -274,4 +274,15 @@ CourseId (FK)
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;140.0;60.0;140.0;60.0;10.0;270.0;10.0</additional_attributes>
   </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>50</x>
+      <y>300</y>
+      <w>780</w>
+      <h>280</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>720.0;50.0;760.0;50.0;760.0;230.0;590.0;230.0;590.0;260.0;10.0;260.0;10.0;10.0;40.0;10.0</additional_attributes>
+  </element>
 </diagram>
