@@ -126,6 +126,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IRepo\ICourseRepo.cs" />
     <Compile Include="IRepo\ISchoolRegisterContext.cs" />
     <Compile Include="IRepo\IStudentRepo.cs" />
     <Compile Include="Migrations\201710192141455_FirstMigrationCorrect.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Views\AccountViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repo\CourseRepo.cs" />
     <Compile Include="Repo\StudentRepo.cs" />
   </ItemGroup>
   <ItemGroup>
