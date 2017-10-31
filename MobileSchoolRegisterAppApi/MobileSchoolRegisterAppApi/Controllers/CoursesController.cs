@@ -37,14 +37,13 @@ namespace MobileSchoolRegisterAppApi.Controllers
         public IHttpActionResult GetCourse(int? id)
         {
             if (id == null)
-            {
-                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.BadRequest, "No id was provided"));
+            {   
+                return BadRequest();
             }
             Course course = _repo.GetCourseById((int)id);
             if (course == null)
             {
-                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.NotFound,
-                    "Requested course does not exist"));
+                return NotFound();
             }
             return Ok(course);
         }
