@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Results;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -63,6 +64,20 @@ namespace MobileSchoolRegisterAppApi.Tests.Controllers
             //Assert
             Assert.IsInstanceOfType(actionResult, typeof(BadRequestResult));
         }
+
+        [TestMethod]
+        public void GetCourses_ShouldReturnOk()
+        {
+            //Arrange 
+            testSchoolRegisterContext = new TestSchoolRegisterContext();
+            courseRepo = new CourseRepo(testSchoolRegisterContext);
+            coursesController = new CoursesController(courseRepo);
+            PopulateCourseFields();
+
+            //Act
+            IQueryable<Course> actionResult = coursesController.GetCourses();
+        }
+
 
         private void PopulateCourseFields()
         {
