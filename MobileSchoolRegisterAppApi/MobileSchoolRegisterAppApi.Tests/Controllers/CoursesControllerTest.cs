@@ -73,7 +73,6 @@ namespace MobileSchoolRegisterAppApi.Tests.Controllers
             courseRepo = new CourseRepo(testSchoolRegisterContext);
             coursesController = new CoursesController(courseRepo);
             PopulateCourseFields();
-            //asldmalksd
             //Act
             IQueryable<Course> actionResult = coursesController.GetCourses();
         }
