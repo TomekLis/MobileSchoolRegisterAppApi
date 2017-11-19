@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
@@ -8,7 +9,7 @@ using Repository.Models;
 
 namespace Repository.Repo
 {
-    public class CourseRepo : ICourseRepo
+    public class CourseRepo : DbContext, ICourseRepo
     {
         private readonly ISchoolRegisterContext _db;
 
@@ -18,7 +19,7 @@ namespace Repository.Repo
         }
         public IQueryable<Course> GetCourses()
         {
-            _db.Database.Log = message => Trace.WriteLine(message);
+            //_db.Database.Log = message => Trace.WriteLine(message);
             return _db.Courses.AsNoTracking();
         }
 
@@ -43,9 +44,9 @@ namespace Repository.Repo
             throw new NotImplementedException();
         }
 
-        public void EditCourse(Course course)
+        public void MarkAsModified(Course course)
         {
-            throw new NotImplementedException();
+            Entry(course).State = EntityState.Modified;
         }
     }
 }

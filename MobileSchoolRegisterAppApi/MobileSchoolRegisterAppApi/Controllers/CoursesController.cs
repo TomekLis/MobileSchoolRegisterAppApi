@@ -26,18 +26,19 @@ namespace MobileSchoolRegisterAppApi.Controllers
         }
 
         // GET: api/Courses
-        public IQueryable<Course> GetCourses()
+        [ResponseType(typeof(IQueryable<Course>))]
+        public IHttpActionResult GetCourses()
         {
             var courses = _repo.GetCourses();
-            return courses;
+            return Ok(courses);
         }
 
         // GET: api/Courses/5
         [ResponseType(typeof(Course))]
-        public IHttpActionResult GetCourse(int? id)
+        public IHttpActionResult Get(int? id)
         {
             if (id == null)
-            {   
+            {
                 return BadRequest();
             }
             Course course = _repo.GetCourseById((int)id);
@@ -49,83 +50,60 @@ namespace MobileSchoolRegisterAppApi.Controllers
         }
 
         // PUT: api/Courses/5
-        //    [ResponseType(typeof(void))]
-        //    public IHttpActionResult PutCourse(int id, Course course)
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            return BadRequest(ModelState);
-        //        }
-
-        //        if (id != course.Id)
-        //        {
-        //            return BadRequest();
-        //        }
-
-        //        db.Entry(course).State = EntityState.Modified;
-
-        //        try
-        //        {
-        //            db.SaveChanges();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!CourseExists(id))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-
-        //        return StatusCode(HttpStatusCode.NoContent);
-        //    }
+        [ResponseType(typeof(void))]
+        public IHttpActionResult Put(int? id, Course course)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (id == null || id != course.Id)
+            {
+                return BadRequest();
+            }
+            if (!CourseExists((int)id))
+            {
+                return NotFound();
+            }
+            _repo.MarkAsModified(course);
+            _repo.SaveChanges();
+            return Content(HttpStatusCode.Accepted, course);
+        }
 
         //    // POST: api/Courses
-        //    [ResponseType(typeof(Course))]
-        //    public IHttpActionResult PostCourse(Course course)
-        //    {
-        //        if (!ModelState.IsValid)
-        //        {
-        //            return BadRequest(ModelState);
-        //        }
+        [ResponseType(typeof(Course))]
+        public IHttpActionResult PostCourse(Course course)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //        db.Courses.Add(course);
-        //        db.SaveChanges();
+            _repo.AddCourse(course);
+            _repo.SaveChanges();
 
-        //        return CreatedAtRoute("DefaultApi", new { id = course.Id }, course);
-        //    }
+            return CreatedAtRoute("DefaultApi", new { id = course.Id }, course);
+        }
 
         //    // DELETE: api/Courses/5
-        //    [ResponseType(typeof(Course))]
-        //    public IHttpActionResult DeleteCourse(int id)
-        //    {
-        //        Course course = db.Courses.Find(id);
-        //        if (course == null)
-        //        {
-        //            return NotFound();
-        //        }
+        [ResponseType(typeof(Course))]
+        public IHttpActionResult DeleteCourse(int id)
+        {
+            if (!CourseExists(id))
+            {
+                return NotFound();
+            }
 
-        //        db.Courses.Remove(course);
-        //        db.SaveChanges();
+            _repo.DeleteCourse(id);
+            _repo.SaveChanges();
 
-        //        return Ok(course);
-        //    }
+            return Ok();
+        }
 
-        //    protected override void Dispose(bool disposing)
-        //    {
-        //        if (disposing)
-        //        {
-        //            db.Dispose();
-        //        }
-        //        base.Dispose(disposing);
-        //    }
 
-        //    private bool CourseExists(int id)
-        //    {
-        //        return db.Courses.Count(e => e.Id == id) > 0;
-        //    }
+        private bool CourseExists(int id)
+        {
+            return _repo.GetCourses().Count(e => e.Id == id) > 0;
+        }
     }
 }

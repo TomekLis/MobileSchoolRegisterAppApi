@@ -14,7 +14,7 @@ namespace Repository.IRepo
         void DeleteCourse(int id);
         void SaveChanges();
         void AddCourse(Course course);
-        void EditCourse(Course course);
+        void MarkAsModified(Course course);
 
     }
 }

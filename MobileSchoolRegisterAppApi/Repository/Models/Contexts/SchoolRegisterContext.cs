@@ -12,7 +12,8 @@ namespace Repository.Models.Contexts
     public class SchoolRegisterContext : IdentityDbContext, ISchoolRegisterContext
     {
         public SchoolRegisterContext() : base("DefaultConnection")
-        {    
+        {
+            Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
         }
 
         public static SchoolRegisterContext Create()

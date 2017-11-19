@@ -9,7 +9,7 @@ using Repository.Models;
 
 namespace Repository.Repo
 {
-    public class StudentRepo : IStudentRepo
+    public class StudentRepo : DbContext, IStudentRepo
     {
         private readonly ISchoolRegisterContext _db;
 
@@ -57,7 +57,7 @@ namespace Repository.Repo
 
         public void EditStudent(Student student)
         {
-            _db.Entry(student).State = EntityState.Modified;
+            Entry(student).State = EntityState.Modified;
         }
     }
 }

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity;
 using Repository.IRepo;
 using Repository.Models;
 
-namespace MobileSchoolRegisterAppApi.Tests
+namespace MobileSchoolRegisterAppApi.Tests.Contexts
 {
     class TestSchoolRegisterContext : ISchoolRegisterContext
     {
@@ -25,15 +19,12 @@ namespace MobileSchoolRegisterAppApi.Tests
         public DbSet<StudentGroup> StudentGroups { get; set; }
         public DbSet<StudentActivity> StudentActivities { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
+        public int SaveChangesCount { get; private set; }
         public int SaveChanges()
         {
             return 0;
         }
 
         public Database Database { get; }
-        public DbEntityEntry Entry(object entity)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
