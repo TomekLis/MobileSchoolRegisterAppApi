@@ -81,6 +81,7 @@ namespace MobileSchoolRegisterAppApi.Tests.Controllers
             PopulateCourseFields();
             
             //Act
+
             IHttpActionResult actionResult = coursesController.GetCourses();
             var contentResult = actionResult as OkNegotiatedContentResult<IQueryable<Course>>;
 
@@ -91,8 +92,6 @@ namespace MobileSchoolRegisterAppApi.Tests.Controllers
             {
                 Assert.AreEqual(i + 1, contentResult.Content.ElementAt(i).Id);
             }
-
-            
         }
 
         [TestMethod]
@@ -100,7 +99,6 @@ namespace MobileSchoolRegisterAppApi.Tests.Controllers
         {
             // Arrange
             testSchoolRegisterContext = new TestSchoolRegisterContext();
-            
             courseRepo = new MockCourseRepo(testSchoolRegisterContext);
             coursesController = new CoursesController(courseRepo);
             PopulateCourseFields();
@@ -115,22 +113,37 @@ namespace MobileSchoolRegisterAppApi.Tests.Controllers
             Assert.IsNotNull(contentResult.Content);
         }
         [TestMethod]
-        public void PutCourseShouldReturnBadRequestWithmodelState()
+        public void PutCourseShouldReturnBadRequestDifferentId()
         {
             // Arrange
             testSchoolRegisterContext = new TestSchoolRegisterContext();
             courseRepo = new MockCourseRepo(testSchoolRegisterContext);
             coursesController = new CoursesController(courseRepo);
 
-            // Act
-            IHttpActionResult actionResult = coursesController.Put(1, new Course { Id = 1 });
-            var contentResult = actionResult as NegotiatedContentResult<Course>;
+            //Act
+            IHttpActionResult actionResult = coursesController.Put(99, new Course { Id = 1 });
 
-            // Assert
-            Assert.IsNotNull(contentResult);
-            Assert.AreEqual(HttpStatusCode.Accepted, contentResult.StatusCode);
-            Assert.IsNotNull(contentResult.Content);
+            //Assert
+            Assert.IsInstanceOfType(actionResult, typeof(BadRequestResult));
         }
+        [TestMethod]
+        public void PutCourseShouldReturnNotFound()
+        {
+            // Arrange
+            testSchoolRegisterContext = new TestSchoolRegisterContext();
+            courseRepo = new MockCourseRepo(testSchoolRegisterContext);
+            coursesController = new CoursesController(courseRepo);
+
+            //Act
+            IHttpActionResult actionResult = coursesController.Put(1, new Course { Id = 1 });
+
+            //Assert
+            Assert.IsInstanceOfType(actionResult, typeof(NotFoundResult));
+        }
+
+
+
+
 
 
 
