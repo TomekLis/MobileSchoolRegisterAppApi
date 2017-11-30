@@ -13,6 +13,8 @@ using System.Web.Mvc;
 using Repository.IRepo;
 using Repository.Models;
 using Repository.Models.Contexts;
+using Repository.Models.DTOs.Course;
+using Repository.Models.DTOs.DaySchedule;
 
 namespace MobileSchoolRegisterAppApi.Controllers
 {
@@ -26,26 +28,57 @@ namespace MobileSchoolRegisterAppApi.Controllers
         }
 
         // GET: api/Courses
-        [ResponseType(typeof(IQueryable<Course>))]
+        [ResponseType(typeof(IQueryable<CourseDto>))]
         public IHttpActionResult GetCourses()
         {
-            var courses = _repo.GetCourses();
+            var courses = _repo.GetCourses().Include(c => c.DaySchedules).Select(c =>
+                new CourseDto()
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    StudentsGroupId = c.StudentsGroupId,
+                    Room = c.Room,
+                    TeacherId = c.TeacherId,
+                    DaySchedules = c.DaySchedules.Select(d => new DayScheduleDto()
+                    {
+                        Day = d.Day,
+                        Id = d.Id,
+                        EndTime = d.EndTime,
+                        StartTime = d.StartTime
+                    })
+                });
+
             return Ok(courses);
         }
 
         // GET: api/Courses/5
-        [ResponseType(typeof(Course))]
+        [ResponseType(typeof(CourseDto))]
         public IHttpActionResult Get(int? id)
         {
             if (id == null)
             {
                 return BadRequest();
             }
-            Course course = _repo.GetCourseById((int)id);
-            if (course == null)
+            Course courseEntity = _repo.GetCourseById((int)id);
+            if (courseEntity == null)
             {
                 return NotFound();
             }
+            var course = new CourseDto()
+            {
+                Id = courseEntity.Id,
+                Name = courseEntity.Name,
+                Room = courseEntity.Room,
+                StudentsGroupId = courseEntity.StudentsGroupId,
+                TeacherId = courseEntity.TeacherId,
+                DaySchedules = courseEntity.DaySchedules.Select(d => new DayScheduleDto()
+                {
+                    Day = d.Day,
+                    Id = d.Id,
+                    EndTime = d.EndTime,
+                    StartTime = d.StartTime
+                })
+            };
             return Ok(course);
         }
 
