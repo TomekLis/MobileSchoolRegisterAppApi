@@ -12,6 +12,7 @@ using MobileSchoolRegisterAppApi.Tests.Contexts;
 using MobileSchoolRegisterAppApi.Tests.MockRepos;
 using Repository.IRepo;
 using Repository.Models;
+using Repository.Models.DTOs.Course;
 
 namespace MobileSchoolRegisterAppApi.Tests.Controllers
 {
@@ -33,7 +34,7 @@ namespace MobileSchoolRegisterAppApi.Tests.Controllers
             
             //Act
             var actionResult = coursesController.Get(1);
-            var contentResult = actionResult as OkNegotiatedContentResult<Course>;
+            var contentResult = actionResult as OkNegotiatedContentResult<CourseDto>;
 
             // Assert
             Assert.IsNotNull(contentResult);
@@ -83,7 +84,7 @@ namespace MobileSchoolRegisterAppApi.Tests.Controllers
             //Act
 
             IHttpActionResult actionResult = coursesController.GetCourses();
-            var contentResult = actionResult as OkNegotiatedContentResult<IQueryable<Course>>;
+            var contentResult = actionResult as OkNegotiatedContentResult<IQueryable<CourseDto>>;
 
             //Assert
             Assert.IsNotNull(contentResult);
