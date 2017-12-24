@@ -118,7 +118,7 @@ namespace MobileSchoolRegisterAppApi.Controllers
             return CreatedAtRoute("DefaultApi", new { id = course.Id }, course);
         }
 
-        //    // DELETE: api/Courses/5
+        // DELETE: api/Courses/5
         [ResponseType(typeof(Course))]
         public IHttpActionResult DeleteCourse(int id)
         {

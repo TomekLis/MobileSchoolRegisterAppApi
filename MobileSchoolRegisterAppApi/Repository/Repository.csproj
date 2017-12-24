@@ -130,6 +130,7 @@
     <Compile Include="IRepo\IMarkRepo.cs" />
     <Compile Include="IRepo\ISchoolRegisterContext.cs" />
     <Compile Include="IRepo\IStudentRepo.cs" />
+    <Compile Include="IRepo\ITeacherRepo.cs" />
     <Compile Include="Migrations\201710192141455_FirstMigrationCorrect.cs" />
     <Compile Include="Migrations\201710192141455_FirstMigrationCorrect.Designer.cs">
       <DependentUpon>201710192141455_FirstMigrationCorrect.cs</DependentUpon>
@@ -138,6 +139,10 @@
     <Compile Include="Migrations\201710192214034_Age-Student-New-Field.Designer.cs">
       <DependentUpon>201710192214034_Age-Student-New-Field.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712232231251_LessonAdjustementMigration.cs" />
+    <Compile Include="Migrations\201712232231251_LessonAdjustementMigration.Designer.cs">
+      <DependentUpon>201712232231251_LessonAdjustementMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attendance.cs" />
     <Compile Include="Models\Contexts\SchoolRegisterContext.cs" />
@@ -145,6 +150,7 @@
     <Compile Include="Models\DaySchedule.cs" />
     <Compile Include="Models\DTOs\Course\CourseDto.cs" />
     <Compile Include="Models\DTOs\DaySchedule\DayScheduleDto.cs" />
+    <Compile Include="Models\DTOs\Teacher\TeacherBasicDto.cs" />
     <Compile Include="Models\Lesson.cs" />
     <Compile Include="Models\Mark.cs" />
     <Compile Include="Models\Student.cs" />
@@ -157,6 +163,7 @@
     <Compile Include="Repo\CourseRepo.cs" />
     <Compile Include="Repo\MarkRepo.cs" />
     <Compile Include="Repo\StudentRepo.cs" />
+    <Compile Include="Repo\TeacherRepo.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201710192141455_FirstMigrationCorrect.resx">
@@ -165,6 +172,9 @@
     <EmbeddedResource Include="Migrations\201710192214034_Age-Student-New-Field.resx">
       <DependentUpon>201710192214034_Age-Student-New-Field.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712232231251_LessonAdjustementMigration.resx">
+      <DependentUpon>201712232231251_LessonAdjustementMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\DTOs\Attendance\" />
@@ -172,7 +182,6 @@
     <Folder Include="Models\DTOs\Mark\" />
     <Folder Include="Models\DTOs\StudentActivity\" />
     <Folder Include="Models\DTOs\Student\" />
-    <Folder Include="Models\DTOs\Teacher\" />
     <Folder Include="Models\DTOs\User\" />
   </ItemGroup>
   <PropertyGroup>
