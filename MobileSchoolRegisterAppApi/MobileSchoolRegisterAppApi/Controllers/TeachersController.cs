@@ -49,6 +49,7 @@ namespace MobileSchoolRegisterAppApi.Controllers
             var teacher = new TeacherBasicDto()
             {
                 Id = teacherEntity.Id,
+                UserName = teacherEntity.UserName,
                 FullName = teacherEntity.FullName,
                 FirstName = teacherEntity.FirstName,
                 LastName = teacherEntity.LastName,
