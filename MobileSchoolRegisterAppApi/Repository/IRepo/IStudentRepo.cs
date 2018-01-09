@@ -7,13 +7,13 @@ using Repository.Models;
 
 namespace Repository.IRepo
 {
-    interface IStudentRepo
+    public interface IStudentRepo
     {
         IQueryable<Student> GetStudents();
         Student GetStudentById(string id);
         void DeleteStudent(string id);
         void SaveChanges();
-        void AddStudent(Student student);
-        void EditStudent(Student student);
+        void MarkAsModified(Student student);
+        void GetCoursesRelatedToStudent(Student teacher);
     }
 }

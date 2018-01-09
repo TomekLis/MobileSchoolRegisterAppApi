@@ -21,7 +21,7 @@ namespace MobileSchoolRegisterAppApi.Tests.MockRepos
             return _db.Teachers;
         }
 
-        public Teacher GeTeacherById(string id)
+        public Teacher GetTeacherById(string id)
         {
             return _db.Teachers.Find(id);
         }

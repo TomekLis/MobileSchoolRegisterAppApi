@@ -6,7 +6,6 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Microsoft.AspNet.Identity;
@@ -15,119 +14,114 @@ using Repository.Models;
 using Repository.Models.Contexts;
 using Repository.Models.DTOs.Course;
 using Repository.Models.DTOs.DaySchedule;
-using Repository.Models.DTOs.Teacher;
-using WebGrease.Css.Extensions;
+using Repository.Models.DTOs.Student;
 
 namespace MobileSchoolRegisterAppApi.Controllers
 {
-    [Authorize]
-    public class TeachersController : ApiController
+    public class StudentsController : ApiController
     {
-        private readonly ITeacherRepo _repo;
-
-        public TeachersController(ITeacherRepo repo)
+        private readonly IStudentRepo _repo;
+        public StudentsController(IStudentRepo repo)
         {
             _repo = repo;
         }
 
 
-        // GET: api/Teachers/5
-        [ResponseType(typeof(Teacher))]
-        public IHttpActionResult GetTeacher(string id)
+        // GET: api/Students/5
+        [ResponseType(typeof(Student))]
+        public IHttpActionResult GetStudent(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
                 return BadRequest();
             }
-            Teacher teacherEntity = _repo.GetTeacherById(id);
+            Student studentEntity = _repo.GetStudentById(id);
 
-            if (teacherEntity == null)
+            if (studentEntity == null)
             {
                 return NotFound();
             }
-            if (!HasAccesToTeacher(id))
+            if(!HasAccesToStudent(id))
             {
                 return ResponseMessage(new HttpResponseMessage(HttpStatusCode.Forbidden));
             }
 
-            var teacher = new TeacherBasicDto()
+            var student = new StudentBasicDto()
             {
-                Id = teacherEntity.Id,
-                UserName = teacherEntity.UserName,
-                FullName = teacherEntity.FullName,
-                FirstName = teacherEntity.FirstName,
-                LastName = teacherEntity.LastName,
-                Email = teacherEntity.Email,
-                PhoneNumber = teacherEntity.PhoneNumber
+                Id = studentEntity.Id,
+                UserName = studentEntity.UserName,
+                FirstName = studentEntity.FirstName,
+                LastName = studentEntity.LastName,
+                Email = studentEntity.Email,
+                PhoneNumber = studentEntity.PhoneNumber
             };
 
-            return Ok(teacher);
+            return Ok(student);
         }
 
-        // PUT: api/Teachers/5
+        // PUT: api/Students/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutTeacher(string id, Teacher teacher)
+        public IHttpActionResult PutStudent(string id, Student student)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (string.IsNullOrEmpty(id) || id != teacher.Id)
+            if (string.IsNullOrEmpty(id) || id != student.Id)
             {
                 return BadRequest();
             }
 
-            if (!TeacherExists(id))
+            if (!StudentExists(id))
             {
                 return NotFound();
             }
-            if (!HasAccesToTeacher(id))
+            if (!HasAccesToStudent(id))
             {
                 return ResponseMessage(new HttpResponseMessage(HttpStatusCode.Forbidden));
             }
-            _repo.MarkAsModified(teacher);
+            _repo.MarkAsModified(student);
             _repo.SaveChanges();
-            
-            return Ok(teacher);
+            return Ok(student);
         }
 
-        // DELETE: api/Teachers/5
-        [ResponseType(typeof(Teacher))]
-        public IHttpActionResult DeleteTeacher(string id)
+        // DELETE: api/Students/5
+        [ResponseType(typeof(Student))]
+        public IHttpActionResult DeleteStudent(string id)
         {
-            if (!TeacherExists(id))
+            if (!StudentExists(id))
             {
                 return NotFound();
             }
-            if (!HasAccesToTeacher(id))
+            if (!HasAccesToStudent(id))
             {
                 return ResponseMessage(new HttpResponseMessage(HttpStatusCode.Forbidden));
             }
-            _repo.DeleteTeacher(id);
+            _repo.DeleteStudent(id);
             _repo.SaveChanges();
             return Ok();
         }
 
         [ResponseType(typeof(IQueryable<CourseDto>))]
-        public IHttpActionResult GetCoursesByTeacherId(string id)
+        public IHttpActionResult GetCoursesByStudentId(string id)
         {
-            if (!TeacherExists(id))
+            if (!StudentExists(id))
             {
                 return NotFound();
             }
-            if (!HasAccesToTeacher(id))
+            if (!HasAccesToStudent(id))
             {
                 return ResponseMessage(new HttpResponseMessage(HttpStatusCode.Forbidden));
             }
-            Teacher teacherEntity = _repo.GetTeacherById(id);
-
-            if (teacherEntity == null)
+            Student studentEntity = _repo.GetStudentById(id);
+            
+            if (studentEntity == null)
             {
                 return NotFound();
             }
-            _repo.GetCoursesRelatedToTeacher(teacherEntity);
-            var courses = teacherEntity.Courses.Select(c =>
+            _repo.GetCoursesRelatedToStudent(studentEntity);
+            var courses = studentEntity.StudentGroup.Courses.Select(c =>
                 new CourseDto()
                 {
                     Id = c.Id,
@@ -143,17 +137,19 @@ namespace MobileSchoolRegisterAppApi.Controllers
                         StartTime = d.StartTime
                     })
                 });
-            return Ok(courses);
+            return Ok();
         }
 
-        private bool TeacherExists(string id)
+        private bool StudentExists(string id)
         {
-            return _repo.GeTeachers().Count(e => e.Id == id) > 0;
+            return _repo.GetStudents().Count(e => e.Id == id) > 0;
         }
 
-        private bool HasAccesToTeacher(string id)
+        private bool HasAccesToStudent(string id)
         {
             return User.Identity.GetUserId() == id;
         }
+
+
     }
 }

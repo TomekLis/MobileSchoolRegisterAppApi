@@ -109,6 +109,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MockRepos\MockStudentRepo.cs" />
+    <Compile Include="Controllers\StudentsControllerTest.cs" />
     <Compile Include="TestDbSets\TestAttendancesDbSet.cs" />
     <Compile Include="TestDbSets\TestDaySchedulesDbSet.cs" />
     <Compile Include="TestDbSets\TestLessonsDbSet.cs" />
@@ -123,7 +125,6 @@
     <Compile Include="MockRepos\MockTeacherRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
-    <Compile Include="Controllers\ValuesControllerTest.cs" />
     <Compile Include="TestDbSets\TestCoursesDbSet.cs" />
     <Compile Include="TestDbSets\TestDbSet.cs" />
     <Compile Include="Contexts\TestSchoolRegisterContext.cs" />

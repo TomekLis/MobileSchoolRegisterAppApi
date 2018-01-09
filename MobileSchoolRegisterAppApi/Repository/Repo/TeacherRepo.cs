@@ -21,7 +21,7 @@ namespace Repository.Repo
             return _db.Teachers.AsNoTracking();
         }
 
-        public Teacher GeTeacherById(string id)
+        public Teacher GetTeacherById(string id)
         {
             Teacher teacher = _db.Teachers.Find(id);
             return teacher;

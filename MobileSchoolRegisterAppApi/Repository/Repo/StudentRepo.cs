@@ -50,14 +50,19 @@ namespace Repository.Repo
             _db.SaveChanges();
         }
 
-        public void AddStudent(Student student)
-        {
-            _db.Students.Add(student);
-        }
-
-        public void EditStudent(Student student)
+        public void MarkAsModified(Student student)
         {
             Entry(student).State = EntityState.Modified;
+        }
+
+        public void GetCoursesRelatedToStudent(Student teacher)
+        {
+            Entry(teacher).Collection<Course>(t => t.StudentGroup.Courses).Load();
+        }
+
+        public void GetCoursesRelatedToTeacher(Student student)
+        {
+            Entry(student).Collection<Course>(t => t.StudentGroup.Courses).Load();
         }
     }
 }

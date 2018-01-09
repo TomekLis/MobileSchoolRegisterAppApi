@@ -143,6 +143,10 @@
     <Compile Include="Migrations\201712232231251_LessonAdjustementMigration.Designer.cs">
       <DependentUpon>201712232231251_LessonAdjustementMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801091813214_relation-Course-StudentGroup.cs" />
+    <Compile Include="Migrations\201801091813214_relation-Course-StudentGroup.Designer.cs">
+      <DependentUpon>201801091813214_relation-Course-StudentGroup.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attendance.cs" />
     <Compile Include="Models\Contexts\SchoolRegisterContext.cs" />
@@ -150,6 +154,7 @@
     <Compile Include="Models\DaySchedule.cs" />
     <Compile Include="Models\DTOs\Course\CourseDto.cs" />
     <Compile Include="Models\DTOs\DaySchedule\DayScheduleDto.cs" />
+    <Compile Include="Models\DTOs\Student\StudentBasicDto.cs" />
     <Compile Include="Models\DTOs\Teacher\TeacherBasicDto.cs" />
     <Compile Include="Models\Lesson.cs" />
     <Compile Include="Models\Mark.cs" />
@@ -175,13 +180,15 @@
     <EmbeddedResource Include="Migrations\201712232231251_LessonAdjustementMigration.resx">
       <DependentUpon>201712232231251_LessonAdjustementMigration.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801091813214_relation-Course-StudentGroup.resx">
+      <DependentUpon>201801091813214_relation-Course-StudentGroup.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\DTOs\Attendance\" />
     <Folder Include="Models\DTOs\Lesson\" />
     <Folder Include="Models\DTOs\Mark\" />
     <Folder Include="Models\DTOs\StudentActivity\" />
-    <Folder Include="Models\DTOs\Student\" />
     <Folder Include="Models\DTOs\User\" />
   </ItemGroup>
   <PropertyGroup>

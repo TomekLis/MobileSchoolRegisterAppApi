@@ -19,6 +19,8 @@ namespace Repository.Models
         public string Name { get; set; }
         [Range(1,8)]
         public int Grade { get; set; }
-        public virtual ICollection<Student> Students { get; set; }   
+        public virtual ICollection<Student> Students { get; set; }
+        public virtual ICollection<Course> Courses { get; set; }
+
     }
 }

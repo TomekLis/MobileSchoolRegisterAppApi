@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
+using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MobileSchoolRegisterAppApi.Controllers;
 using MobileSchoolRegisterAppApi.Tests.Contexts;
@@ -26,7 +28,7 @@ namespace MobileSchoolRegisterAppApi.Tests.Controllers
         private TeachersController teachersController;
 
         [TestMethod]
-        public void GetTeacher_ShouldReturnOks()
+        public void GetTeacher_ShouldReturnOk()
         {
             //Arrange
             testSchoolRegisterContext = new TestSchoolRegisterContext();
@@ -42,6 +44,222 @@ namespace MobileSchoolRegisterAppApi.Tests.Controllers
             Assert.IsNotNull(contentResult);
             Assert.IsNotNull(contentResult.Content);
             Assert.AreEqual("sampleTeacherId", contentResult.Content.Id);
+        }
+
+        [TestMethod]
+        public void GetTeacher_ShouldReturnNotFound()
+        {
+            //Arrange
+            testSchoolRegisterContext = new TestSchoolRegisterContext();
+            teacherRepo = new MockTeacherRepo(testSchoolRegisterContext);
+            teachersController = new TeachersController(teacherRepo);
+            PopulateTeacherFields();
+
+            //Act
+            var actionResult = teachersController.GetTeacher("notExistingTeacherId");
+
+
+            //Assert
+            Assert.IsNotNull(actionResult);
+            Assert.IsInstanceOfType(actionResult, typeof(NotFoundResult));
+        }
+
+        [TestMethod]
+        public void GetTeacher_ShouldReturnForbidden()
+        {
+            //Arrange
+            testSchoolRegisterContext = new TestSchoolRegisterContext();
+            teacherRepo = new MockTeacherRepo(testSchoolRegisterContext);
+            teachersController = new TeachersController(teacherRepo);
+            PopulateTeacherFields();
+
+            //Act
+            var actionResult = teachersController.GetTeacher("unauthenticatedTeacherId") as ResponseMessageResult;
+
+
+            //Assert
+            Assert.IsNotNull(actionResult);
+            Assert.AreEqual(actionResult.Response.StatusCode, HttpStatusCode.Forbidden);
+        }
+        [TestMethod]
+        public void GetTeacher_ShouldReturnBadRequest()
+        {
+            //Arrange
+            testSchoolRegisterContext = new TestSchoolRegisterContext();
+            teacherRepo = new MockTeacherRepo(testSchoolRegisterContext);
+            teachersController = new TeachersController(teacherRepo);
+
+            //Act
+            IHttpActionResult actionResult = teachersController.GetTeacher(null);
+
+            //Assert
+            Assert.IsInstanceOfType(actionResult, typeof(BadRequestResult));
+
+        }
+
+        [TestMethod]
+        public void PutTeacher__ShouldReturnOk()
+        {
+            // Arrange
+            testSchoolRegisterContext = new TestSchoolRegisterContext();
+            teacherRepo = new MockTeacherRepo(testSchoolRegisterContext);
+            teachersController = new TeachersController(teacherRepo);
+            PopulateTeacherFields();
+
+            //Act
+            var actionResult = teachersController.PutTeacher("sampleTeacherId", new Teacher { Id = "sampleTeacherId" });
+            var contentResult = actionResult as OkNegotiatedContentResult<Teacher>;
+
+            // Assert
+            Assert.IsNotNull(contentResult);
+            Assert.IsNotNull(contentResult.Content);
+            Assert.AreEqual("sampleTeacherId", contentResult.Content.Id);
+        }
+        [TestMethod]
+        public void PutTeacher_ShouldReturnBadRequestDifferentId()
+        {
+            // Arrange
+            testSchoolRegisterContext = new TestSchoolRegisterContext();
+            teacherRepo = new MockTeacherRepo(testSchoolRegisterContext);
+            teachersController = new TeachersController(teacherRepo);
+
+            //Act
+            IHttpActionResult actionResult = teachersController.PutTeacher("notExistingTeacherId", new Teacher { Id = "sampleTeacherId" });
+
+            //Assert
+            Assert.IsInstanceOfType(actionResult, typeof(BadRequestResult));
+        }
+        [TestMethod]
+        public void PutTeacher_ShouldReturnNotFound()
+        {
+            // Arrange
+            testSchoolRegisterContext = new TestSchoolRegisterContext();
+            teacherRepo = new MockTeacherRepo(testSchoolRegisterContext);
+            teachersController = new TeachersController(teacherRepo);
+
+            //Act
+            IHttpActionResult actionResult = teachersController.PutTeacher("sampleTeacherId", new Teacher { Id = "sampleTeacherId" });
+
+            //Assert
+            Assert.IsInstanceOfType(actionResult, typeof(NotFoundResult));
+        }
+        [TestMethod]
+        public void PutTeacher_ShouldReturnForbidden()
+        {
+            //Arrange
+            testSchoolRegisterContext = new TestSchoolRegisterContext();
+            teacherRepo = new MockTeacherRepo(testSchoolRegisterContext);
+            teachersController = new TeachersController(teacherRepo);
+            PopulateTeacherFields();
+
+            //Act
+            var actionResult = teachersController.PutTeacher("unauthenticatedTeacherId", new Teacher { Id = "unauthenticatedTeacherId" }) as ResponseMessageResult;
+
+
+            //Assert
+            Assert.IsNotNull(actionResult);
+            Assert.AreEqual(actionResult.Response.StatusCode, HttpStatusCode.Forbidden);
+        }
+        [TestMethod]
+        public void DeleteTeacher__ShouldReturnOk()
+        {
+            // Arrange
+            testSchoolRegisterContext = new TestSchoolRegisterContext();
+            teacherRepo = new MockTeacherRepo(testSchoolRegisterContext);
+            teachersController = new TeachersController(teacherRepo);
+            PopulateTeacherFields();
+
+            //Act
+            var actionResult = teachersController.GetTeacher("sampleTeacherId");
+            var contentResult = actionResult as OkNegotiatedContentResult<TeacherBasicDto>;
+
+            // Assert
+            Assert.IsNotNull(contentResult);
+            Assert.IsNotNull(contentResult.Content);
+            Assert.AreEqual("sampleTeacherId", contentResult.Content.Id);
+        }
+
+        [TestMethod]
+        public void DeleteTeacher_ShouldReturnNotFound()
+        {
+            // Arrange
+            testSchoolRegisterContext = new TestSchoolRegisterContext();
+            teacherRepo = new MockTeacherRepo(testSchoolRegisterContext);
+            teachersController = new TeachersController(teacherRepo);
+
+            //Act
+            IHttpActionResult actionResult = teachersController.DeleteTeacher("sampleTeacherId");
+
+            //Assert
+            Assert.IsInstanceOfType(actionResult, typeof(NotFoundResult));
+        }
+        [TestMethod]
+        public void DeleteTeacher_ShouldReturnForbidden()
+        {
+            //Arrange
+            testSchoolRegisterContext = new TestSchoolRegisterContext();
+            teacherRepo = new MockTeacherRepo(testSchoolRegisterContext);
+            teachersController = new TeachersController(teacherRepo);
+            PopulateTeacherFields();
+
+            //Act
+            var actionResult = teachersController.DeleteTeacher("unauthenticatedTeacherId") as ResponseMessageResult;
+
+
+            //Assert
+            Assert.IsNotNull(actionResult);
+            Assert.AreEqual(actionResult.Response.StatusCode, HttpStatusCode.Forbidden);
+        }
+
+        [TestMethod]
+        public void GetCoursesByTeacherId__ShouldReturnOk()
+        {
+            // Arrange
+            testSchoolRegisterContext = new TestSchoolRegisterContext();
+            teacherRepo = new MockTeacherRepo(testSchoolRegisterContext);
+            teachersController = new TeachersController(teacherRepo);
+            PopulateTeacherFields();
+
+            //Act
+            var actionResult = teachersController.GetTeacher("sampleTeacherId");
+            var contentResult = actionResult as OkNegotiatedContentResult<TeacherBasicDto>;
+
+            // Assert
+            Assert.IsNotNull(contentResult);
+            Assert.IsNotNull(contentResult.Content);
+            Assert.AreEqual("sampleTeacherId", contentResult.Content.Id);
+        }
+
+        [TestMethod]
+        public void GetCoursesByTeacherId_ShouldReturnNotFound()
+        {
+            // Arrange
+            testSchoolRegisterContext = new TestSchoolRegisterContext();
+            teacherRepo = new MockTeacherRepo(testSchoolRegisterContext);
+            teachersController = new TeachersController(teacherRepo);
+
+            //Act
+            IHttpActionResult actionResult = teachersController.GetCoursesByTeacherId("sampleTeacherId");
+
+            //Assert
+            Assert.IsInstanceOfType(actionResult, typeof(NotFoundResult));
+        }
+        [TestMethod]
+        public void GetCoursesByTeacherId_ShouldReturnForbidden()
+        {
+            //Arrange
+            testSchoolRegisterContext = new TestSchoolRegisterContext();
+            teacherRepo = new MockTeacherRepo(testSchoolRegisterContext);
+            teachersController = new TeachersController(teacherRepo);
+            PopulateTeacherFields();
+
+            //Act
+            var actionResult = teachersController.GetCoursesByTeacherId("unauthenticatedTeacherId") as ResponseMessageResult;
+
+
+            //Assert
+            Assert.IsNotNull(actionResult);
+            Assert.AreEqual(actionResult.Response.StatusCode, HttpStatusCode.Forbidden);
         }
 
         private void PopulateTeacherFields()
@@ -70,6 +288,13 @@ namespace MobileSchoolRegisterAppApi.Tests.Controllers
                     course3
                 }
             });
+            testSchoolRegisterContext.Teachers.Add(new Teacher()
+            {
+                Id = "unauthenticatedTeacherId",
+                FirstName = "Jane",
+                LastName = "Doe"
+            });
+
         }
     }
 }
