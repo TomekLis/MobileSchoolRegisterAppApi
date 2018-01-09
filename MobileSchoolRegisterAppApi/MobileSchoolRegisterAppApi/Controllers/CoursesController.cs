@@ -133,7 +133,6 @@ namespace MobileSchoolRegisterAppApi.Controllers
             return Ok();
         }
 
-
         private bool CourseExists(int id)
         {
             return _repo.GetCourses().Count(e => e.Id == id) > 0;

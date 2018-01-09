@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using MobileSchoolRegisterAppApi.Tests.TestDbSets;
 using Repository.IRepo;
 using Repository.Models;
 
@@ -8,7 +9,15 @@ namespace MobileSchoolRegisterAppApi.Tests.Contexts
     {
         public TestSchoolRegisterContext()
         {
+            this.Attendances = new TestAttendancesDbSet();
             this.Courses = new TestCoursesDbSet();
+            this.DaySchedules = new TestDaySchedulesDbSet();
+            this.Lessons = new TestLessonsDbSet();
+            this.Marks = new TestMarksDbSet();
+            this.Students = new TestStudentsDbSet();
+            this.StudentGroups = new TestStudentGroupsDbSet();
+            this.StudentActivities = new TestStudentActivitiesDbSet();
+            this.Teachers = new TestTeachersDbSet();
         }
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Course> Courses { get; set; }

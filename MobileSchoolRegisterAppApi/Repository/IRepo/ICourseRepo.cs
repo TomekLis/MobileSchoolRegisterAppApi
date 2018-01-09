@@ -15,6 +15,5 @@ namespace Repository.IRepo
         void SaveChanges();
         void AddCourse(Course course);
         void MarkAsModified(Course course);
-
     }
 }

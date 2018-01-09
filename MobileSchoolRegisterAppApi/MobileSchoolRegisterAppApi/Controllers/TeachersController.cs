@@ -13,7 +13,10 @@ using Microsoft.AspNet.Identity;
 using Repository.IRepo;
 using Repository.Models;
 using Repository.Models.Contexts;
+using Repository.Models.DTOs.Course;
+using Repository.Models.DTOs.DaySchedule;
 using Repository.Models.DTOs.Teacher;
+using WebGrease.Css.Extensions;
 
 namespace MobileSchoolRegisterAppApi.Controllers
 {
@@ -104,6 +107,43 @@ namespace MobileSchoolRegisterAppApi.Controllers
             _repo.DeleteTeacher(id);
             _repo.SaveChanges();
             return Ok();
+        }
+
+        [ResponseType(typeof(IQueryable<CourseDto>))]
+        public IHttpActionResult GetCoursesByTeacherId(string id)
+        {
+            if (!TeacherExists(id))
+            {
+                return NotFound();
+            }
+            if (!HasAccesToTeacher(id))
+            {
+                return StatusCode(HttpStatusCode.Forbidden);
+            }
+            Teacher teacherEntity = _repo.GeTeacherById(id);
+            
+            if (teacherEntity == null)
+            {
+                return NotFound();
+            }
+            _repo.GetCoursesRelatedToTeacher(teacherEntity);
+            var courses = teacherEntity.Courses.Select(c =>
+                new CourseDto()
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    StudentsGroupId = c.StudentsGroupId,
+                    Room = c.Room,
+                    TeacherId = c.TeacherId,
+                    DaySchedules = c.DaySchedules.Select(d => new DayScheduleDto()
+                    {
+                        Day = d.Day,
+                        Id = d.Id,
+                        EndTime = d.EndTime,
+                        StartTime = d.StartTime
+                    })
+                });
+            return Ok(courses);
         }
 
         private bool TeacherExists(string id)
