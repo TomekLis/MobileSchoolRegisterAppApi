@@ -20,6 +20,7 @@ namespace Repository.Models
         public int? StudentsGroupId { get; set; }
         public virtual Teacher Teacher { get; set; }
         public virtual StudentGroup StudentGroup { get; set; }
+        public ICollection<Lesson> Lessons { get; set; }
         public virtual ICollection<DaySchedule> DaySchedules { get; set; }
     }
 }

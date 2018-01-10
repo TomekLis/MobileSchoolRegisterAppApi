@@ -9,15 +9,18 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using System.Web.Http.Results;
-using System.Web.Mvc;
+using Castle.Components.DictionaryAdapter.Xml;
 using Repository.IRepo;
 using Repository.Models;
 using Repository.Models.Contexts;
 using Repository.Models.DTOs.Course;
 using Repository.Models.DTOs.DaySchedule;
+using Repository.Models.DTOs.Lesson;
+using Repository.Models.DTOs.StudentActivity;
 
 namespace MobileSchoolRegisterAppApi.Controllers
 {
+    [Authorize]
     public class CoursesController : ApiController
     {
         private readonly ICourseRepo _repo;
@@ -136,6 +139,33 @@ namespace MobileSchoolRegisterAppApi.Controllers
         private bool CourseExists(int id)
         {
             return _repo.GetCourses().Count(e => e.Id == id) > 0;
+        }
+
+        public IHttpActionResult GetLessonsByCourseId(int id)
+        {
+            if (!CourseExists(id))
+            {
+                return NotFound();
+            }
+            Course courseEntity = _repo.GetCourseById(id);
+
+            if (courseEntity == null)
+            {
+                return NotFound();
+            }
+            var lessons = courseEntity.Lessons.Select(c =>
+                new LessonDto()
+                {
+                    Id = c.Id,
+                    CourseId = c.CourseId,
+                    Date = c.Date,
+                    studentActivities = c.StudentActivities.Select(d => new StudentActivityDto()
+                    {
+                        Id = d.Id
+                    })
+                });
+            return Ok(lessons);
+
         }
     }
 }

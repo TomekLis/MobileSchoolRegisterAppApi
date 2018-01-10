@@ -37,9 +37,6 @@ namespace MobileSchoolRegisterAppApi.Tests.MockRepos
         {
         }
 
-        public void GetCoursesRelatedToStudent(Student student)
-        {
-        }
 
     }
 }

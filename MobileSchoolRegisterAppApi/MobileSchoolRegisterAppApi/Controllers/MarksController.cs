@@ -11,74 +11,78 @@ using System.Web.Http.Description;
 using Repository.IRepo;
 using Repository.Models;
 using Repository.Models.Contexts;
+using Repository.Models.DTOs.Mark;
 
 namespace MobileSchoolRegisterAppApi.Controllers
 {
     public class MarksController : ApiController
     {
-        private SchoolRegisterContext db = new SchoolRegisterContext();
-
         private readonly IMarkRepo _repo;
 
         public MarksController(IMarkRepo repo)
         {
             _repo = repo;
         }
+
         // GET: api/Marks
-        public IQueryable<Mark> GetStudentActivities()
+        [ResponseType(typeof(IQueryable<MarkDto>))]
+        public IHttpActionResult GetMarks()
         {
-            return db.Marks;
+            var marks = _repo.GetMarks().Select(c =>
+                new MarkDto()
+                {
+                    Id = c.Id,
+                    MarkValue = c.MarkValue,
+                    Importance = c.Importance
+                });
+
+            return Ok(marks);
         }
 
         // GET: api/Marks/5
-        [ResponseType(typeof(Mark))]
-        public IHttpActionResult GetMark(int id)
+        [ResponseType(typeof(MarkDto))]
+        public IHttpActionResult Get(int? id)
         {
-            Mark mark = db.Marks.Find(id) as Mark;
-            if (mark == null)
+            if (id == null)
+            {
+                return BadRequest();
+            }
+            Mark markEntity = _repo.GetMarkById((int)id);
+            if (markEntity == null)
             {
                 return NotFound();
             }
-
+            var mark = new MarkDto()
+            {
+                Id = markEntity.Id,
+                MarkValue = markEntity.MarkValue,
+                Importance = markEntity.Importance
+            };
             return Ok(mark);
         }
 
         // PUT: api/Marks/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutMark(int id, Mark mark)
+        public IHttpActionResult Put(int? id, Mark mark)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            if (id != mark.Id)
+            if (id == null || id != mark.Id)
             {
                 return BadRequest();
             }
-
-            db.Entry(mark).State = EntityState.Modified;
-
-            try
+            if (!MarkExists((int)id))
             {
-                db.SaveChanges();
+                return NotFound();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MarkExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
+            _repo.MarkAsModified(mark);
+            _repo.SaveChanges();
+            return Ok(mark);
         }
 
-        // POST: api/Marks
+        //    // POST: api/Marks
         [ResponseType(typeof(Mark))]
         public IHttpActionResult PostMark(Mark mark)
         {
@@ -87,40 +91,29 @@ namespace MobileSchoolRegisterAppApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.StudentActivities.Add(mark);
-            db.SaveChanges();
+            _repo.AddMark(mark);
+            _repo.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = mark.Id }, mark);
+            return Ok(mark);
         }
 
         // DELETE: api/Marks/5
         [ResponseType(typeof(Mark))]
         public IHttpActionResult DeleteMark(int id)
         {
-            Mark mark = db.StudentActivities.Find(id) as Mark;
-            if (mark == null)
+            if (!MarkExists(id))
             {
                 return NotFound();
             }
 
-            db.StudentActivities.Remove(mark);
-            db.SaveChanges();
+            _repo.DeleteMark(id);
+            _repo.SaveChanges();
 
-            return Ok(mark);
+            return Ok();
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
         private bool MarkExists(int id)
         {
-            return db.StudentActivities.Count(e => e.Id == id) > 0;
+            return _repo.GetMarks().Count(e => e.Id == id) > 0;
         }
     }
 }

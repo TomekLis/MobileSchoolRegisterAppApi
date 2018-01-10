@@ -103,6 +103,7 @@ namespace MobileSchoolRegisterAppApi.Controllers
             return Ok();
         }
 
+        [Route("students/GetCoursesByStudentId/{id}")]
         [ResponseType(typeof(IQueryable<CourseDto>))]
         public IHttpActionResult GetCoursesByStudentId(string id)
         {
@@ -120,7 +121,6 @@ namespace MobileSchoolRegisterAppApi.Controllers
             {
                 return NotFound();
             }
-            _repo.GetCoursesRelatedToStudent(studentEntity);
             var courses = studentEntity.StudentGroup.Courses.Select(c =>
                 new CourseDto()
                 {

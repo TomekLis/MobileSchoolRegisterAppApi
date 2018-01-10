@@ -9,7 +9,7 @@ using Repository.IRepo;
 
 namespace Repository.Models.Contexts
 {
-    public class SchoolRegisterContext : IdentityDbContext, ISchoolRegisterContext
+    public class SchoolRegisterContext : IdentityDbContext<User>, ISchoolRegisterContext
     {
         public SchoolRegisterContext() : base("DefaultConnection")
         {

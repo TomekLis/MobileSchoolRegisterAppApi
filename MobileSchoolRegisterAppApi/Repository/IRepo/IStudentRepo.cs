@@ -14,6 +14,5 @@ namespace Repository.IRepo
         void DeleteStudent(string id);
         void SaveChanges();
         void MarkAsModified(Student student);
-        void GetCoursesRelatedToStudent(Student teacher);
     }
 }

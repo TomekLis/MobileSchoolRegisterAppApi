@@ -109,6 +109,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AttendanceControllerTest.cs" />
+    <Compile Include="Controllers\LessonControllerTest.cs" />
+    <Compile Include="Controllers\MarkControllerTest.cs" />
+    <Compile Include="MockRepos\MockAttendanceRepo.cs" />
+    <Compile Include="MockRepos\MockLessonRepo.cs" />
+    <Compile Include="MockRepos\MockMarkRepo.cs" />
     <Compile Include="MockRepos\MockStudentRepo.cs" />
     <Compile Include="Controllers\StudentsControllerTest.cs" />
     <Compile Include="TestDbSets\TestAttendancesDbSet.cs" />

@@ -126,7 +126,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IRepo\IAttendanceRepo.cs" />
     <Compile Include="IRepo\ICourseRepo.cs" />
+    <Compile Include="IRepo\ILessonRepo.cs" />
     <Compile Include="IRepo\IMarkRepo.cs" />
     <Compile Include="IRepo\ISchoolRegisterContext.cs" />
     <Compile Include="IRepo\IStudentRepo.cs" />
@@ -152,8 +154,12 @@
     <Compile Include="Models\Contexts\SchoolRegisterContext.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\DaySchedule.cs" />
+    <Compile Include="Models\DTOs\Attendance\AttendanceDto.cs" />
     <Compile Include="Models\DTOs\Course\CourseDto.cs" />
     <Compile Include="Models\DTOs\DaySchedule\DayScheduleDto.cs" />
+    <Compile Include="Models\DTOs\Lesson\LessonDto.cs" />
+    <Compile Include="Models\DTOs\Mark\MarkDto.cs" />
+    <Compile Include="Models\DTOs\StudentActivity\StudentActivityDto.cs" />
     <Compile Include="Models\DTOs\Student\StudentBasicDto.cs" />
     <Compile Include="Models\DTOs\Teacher\TeacherBasicDto.cs" />
     <Compile Include="Models\Lesson.cs" />
@@ -165,7 +171,9 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Views\AccountViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repo\AttendanceRepo.cs" />
     <Compile Include="Repo\CourseRepo.cs" />
+    <Compile Include="Repo\LessonRepo.cs" />
     <Compile Include="Repo\MarkRepo.cs" />
     <Compile Include="Repo\StudentRepo.cs" />
     <Compile Include="Repo\TeacherRepo.cs" />
@@ -184,13 +192,7 @@
       <DependentUpon>201801091813214_relation-Course-StudentGroup.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\DTOs\Attendance\" />
-    <Folder Include="Models\DTOs\Lesson\" />
-    <Folder Include="Models\DTOs\Mark\" />
-    <Folder Include="Models\DTOs\StudentActivity\" />
-    <Folder Include="Models\DTOs\User\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

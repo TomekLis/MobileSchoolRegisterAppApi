@@ -13,6 +13,7 @@ using MobileSchoolRegisterAppApi.Tests.MockRepos;
 using Repository.IRepo;
 using Repository.Models;
 using Repository.Models.DTOs.Course;
+using Repository.Models.DTOs.Lesson;
 
 namespace MobileSchoolRegisterAppApi.Tests.Controllers
 {
@@ -31,7 +32,7 @@ namespace MobileSchoolRegisterAppApi.Tests.Controllers
             courseRepo = new MockCourseRepo(testSchoolRegisterContext);
             coursesController = new CoursesController(courseRepo);
             PopulateCourseFields();
-            
+
             //Act
             var actionResult = coursesController.Get(1);
             var contentResult = actionResult as OkNegotiatedContentResult<CourseDto>;
@@ -50,7 +51,7 @@ namespace MobileSchoolRegisterAppApi.Tests.Controllers
             courseRepo = new MockCourseRepo(testSchoolRegisterContext);
             coursesController = new CoursesController(courseRepo);
             PopulateCourseFields();
-            
+
             //Act
             IHttpActionResult actionResult = coursesController.Get(10);
 
@@ -80,7 +81,7 @@ namespace MobileSchoolRegisterAppApi.Tests.Controllers
             courseRepo = new MockCourseRepo(testSchoolRegisterContext);
             coursesController = new CoursesController(courseRepo);
             PopulateCourseFields();
-            
+
             //Act
 
             IHttpActionResult actionResult = coursesController.GetCourses();
@@ -89,10 +90,6 @@ namespace MobileSchoolRegisterAppApi.Tests.Controllers
             //Assert
             Assert.IsNotNull(contentResult);
             Assert.IsNotNull(contentResult.Content);
-            for (int i = 0; i <= 1; i++)
-            {
-                Assert.AreEqual(i + 1, contentResult.Content.ElementAt(i).Id);
-            }
         }
 
         [TestMethod]
@@ -105,7 +102,7 @@ namespace MobileSchoolRegisterAppApi.Tests.Controllers
             PopulateCourseFields();
 
             // Act
-            IHttpActionResult actionResult = coursesController.Put(1, new Course{Id = 1});
+            IHttpActionResult actionResult = coursesController.Put(1, new Course { Id = 1 });
             var contentResult = actionResult as NegotiatedContentResult<Course>;
 
             // Assert
@@ -142,17 +139,33 @@ namespace MobileSchoolRegisterAppApi.Tests.Controllers
             Assert.IsInstanceOfType(actionResult, typeof(NotFoundResult));
         }
 
+        [TestMethod]
+        public void GetLessonsByCourseId_ShouldReturnOk(int id)
+        {
+            //Arrange
+            testSchoolRegisterContext = new TestSchoolRegisterContext();
+            courseRepo = new MockCourseRepo(testSchoolRegisterContext);
+            coursesController = new CoursesController(courseRepo);
+            PopulateCourseFields();
 
+            //Act
+            var actionResult = coursesController.GetLessonsByCourseId(1);
+            var contentResult = actionResult as OkNegotiatedContentResult<ICollection<LessonDto>>;
 
-
-
-
+            // Assert
+            Assert.IsNotNull(contentResult);
+            Assert.IsNotNull(contentResult.Content);
+        }
 
         private void PopulateCourseFields()
         {
-            testSchoolRegisterContext.Courses.Add(new Course { Id = 1, Name = "Mathematics", StudentsGroupId = 1, TeacherId = "sampleTeacherId" });
-            testSchoolRegisterContext.Courses.Add(new Course { Id = 2, Name = "Mathematics", StudentsGroupId = 1, TeacherId = "sampleTeacherId" });
-            testSchoolRegisterContext.Courses.Add(new Course { Id = 3, Name = "Mathematics", StudentsGroupId = 1, TeacherId = "sampleTeacherId" });
+            var course1 = new Course { Id = 1, Name = "Mathematics", StudentsGroupId = 1, TeacherId = "sampleTeacherId" };
+            var course2 = new Course { Id = 2, Name = "Mathematics", StudentsGroupId = 1, TeacherId = "sampleTeacherId" };
+            var course3 = new Course { Id = 3, Name = "Mathematics", StudentsGroupId = 1, TeacherId = "sampleTeacherId" };
+            
+            testSchoolRegisterContext.Courses.Add(course1);
+            testSchoolRegisterContext.Courses.Add(course2);
+            testSchoolRegisterContext.Courses.Add(course3);
         }
     }
 }

@@ -55,14 +55,5 @@ namespace Repository.Repo
             Entry(student).State = EntityState.Modified;
         }
 
-        public void GetCoursesRelatedToStudent(Student teacher)
-        {
-            Entry(teacher).Collection<Course>(t => t.StudentGroup.Courses).Load();
-        }
-
-        public void GetCoursesRelatedToTeacher(Student student)
-        {
-            Entry(student).Collection<Course>(t => t.StudentGroup.Courses).Load();
-        }
     }
 }

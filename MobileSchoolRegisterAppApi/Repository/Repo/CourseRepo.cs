@@ -31,7 +31,8 @@ namespace Repository.Repo
 
         public void DeleteCourse(int id)
         {
-            throw new NotImplementedException();
+            Course course = _db.Courses.Find(id);
+            _db.Courses.Remove(course);
         }
 
         public void SaveChanges()
@@ -41,7 +42,7 @@ namespace Repository.Repo
 
         public void AddCourse(Course course)
         {
-            throw new NotImplementedException();
+            _db.Courses.Add(course);
         }
 
         public void MarkAsModified(Course course)
