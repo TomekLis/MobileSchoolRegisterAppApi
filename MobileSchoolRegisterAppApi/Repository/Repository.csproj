@@ -149,6 +149,10 @@
     <Compile Include="Migrations\201801091813214_relation-Course-StudentGroup.Designer.cs">
       <DependentUpon>201801091813214_relation-Course-StudentGroup.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801200127323_CourseDataExtension.cs" />
+    <Compile Include="Migrations\201801200127323_CourseDataExtension.Designer.cs">
+      <DependentUpon>201801200127323_CourseDataExtension.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attendance.cs" />
     <Compile Include="Models\Contexts\SchoolRegisterContext.cs" />
@@ -190,6 +194,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801091813214_relation-Course-StudentGroup.resx">
       <DependentUpon>201801091813214_relation-Course-StudentGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801200127323_CourseDataExtension.resx">
+      <DependentUpon>201801200127323_CourseDataExtension.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

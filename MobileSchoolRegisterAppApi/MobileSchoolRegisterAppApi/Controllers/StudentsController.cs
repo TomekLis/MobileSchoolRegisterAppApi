@@ -137,7 +137,7 @@ namespace MobileSchoolRegisterAppApi.Controllers
                         StartTime = d.StartTime
                     })
                 });
-            return Ok();
+            return Ok(courses);
         }
 
         private bool StudentExists(string id)

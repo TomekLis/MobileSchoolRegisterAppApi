@@ -16,6 +16,7 @@ using Repository.Models.Contexts;
 using Repository.Models.DTOs.Course;
 using Repository.Models.DTOs.DaySchedule;
 using Repository.Models.DTOs.Lesson;
+using Repository.Models.DTOs.Student;
 using Repository.Models.DTOs.StudentActivity;
 
 namespace MobileSchoolRegisterAppApi.Controllers
@@ -165,6 +166,29 @@ namespace MobileSchoolRegisterAppApi.Controllers
                     })
                 });
             return Ok(lessons);
+
+        }
+
+        [Route("courses/GetStudentsByCourseId/{id}")]
+        public IHttpActionResult GetStudentsByCourseId(int id)
+        {
+            if (!CourseExists(id))
+            {
+                return NotFound();
+            }
+            Course courseEntity = _repo.GetCourseById(id);
+
+            var students = courseEntity.StudentGroup.Students.Select(s => new StudentBasicDto()
+            {
+                Id = s.Id,
+                FirstName = s.FirstName,
+                LastName = s.LastName,
+                Email = s.Email,
+                UserName = s.UserName,
+                PhoneNumber = s.PhoneNumber
+            });
+            return Ok(students);
+
 
         }
     }

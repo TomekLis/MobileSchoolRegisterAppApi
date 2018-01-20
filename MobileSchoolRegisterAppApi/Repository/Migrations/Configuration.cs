@@ -22,7 +22,7 @@ namespace Repository.Migrations
         {
             // Uncomment to debug Seed method
             //if (System.Diagnostics.Debugger.IsAttached == false)
-                //System.Diagnostics.Debugger.Launch();
+            //    System.Diagnostics.Debugger.Launch();
 
             SeedTeachers(context);
             SeedStudentGroups(context);
@@ -47,7 +47,7 @@ namespace Repository.Migrations
 
         private void SeedDaySchedules(SchoolRegisterContext context)
         {
-            var CourseId = context.Set<Course>().Where(t => t.Name == "Mathematics for first grade").FirstOrDefault().Id;
+            var CourseId = context.Set<Course>().FirstOrDefault(t => t.Name == "Mathematics for first grade").Id;
             for (int i = 1; i <= 1; i++)
             {
                 var daySchedule = new DaySchedule()
@@ -66,8 +66,8 @@ namespace Repository.Migrations
         //TODO: experiment a bit on that(inheritance)
         private void SeedStudentActivities(SchoolRegisterContext context)
         {
-            var StudentId = context.Set<Student>().Where(s => s.FirstName == "Andy").FirstOrDefault().Id;
-            var LessonId = context.Set<Lesson>().Where(t => t.Id == 1).FirstOrDefault().Id;
+            var StudentId = context.Set<Student>().FirstOrDefault(s => s.FirstName == "Andy hello").Id;
+            var LessonId = context.Set<Lesson>().FirstOrDefault(t => t.Id == 1).Id;
             for (int i = 1; i <= 1; i++)
             {
                 var mark = new Mark()
@@ -95,19 +95,20 @@ namespace Repository.Migrations
         }
         private void SeedStudents(SchoolRegisterContext context)
         {
-            var StudentGroupId = context.Set<StudentGroup>().Where(t => t.Name == "First grade").FirstOrDefault().Id;
+           
+            var studentGroup = context.Set<StudentGroup>().FirstOrDefault(t => t.Name == "First grade");
             var store = new UserStore<Student>(context);
             var manager = new UserManager<Student>(store);
             if (!context.Users.Any(u => u.UserName == "FirstStudent"))
             {
-                var user = new Student() { UserName = "FirstStudent", FirstName = "Andy", LastName = "Kowalski", StudentsGroupId = StudentGroupId};
+                var user = new Student() { UserName = "FirstStudent", FirstName = "Andy hello", LastName = "Kowalski", StudentGroup = studentGroup, StudentsGroupId = studentGroup.Id};
                 var adminresult = manager.Create(user, "1234Abc");
             }
         }
 
         private void SeedLessons(SchoolRegisterContext context)
         {
-            var CourseId = context.Set<Course>().Where(t => t.Name == "Mathematics for first grade").FirstOrDefault().Id;
+            var CourseId = context.Set<Course>().FirstOrDefault(t => t.Name == "Mathematics for first grade").Id;
             for (int i = 1; i <= 1; i++)
             {
                 var lesson = new Lesson()
@@ -149,17 +150,19 @@ namespace Repository.Migrations
         }
         private void SeedCourses(SchoolRegisterContext context)
         {
-            var TeacherId = context.Set<Teacher>().Where(t => t.UserName == "FirstTeacher").FirstOrDefault().Id;
-            var StudentGroupId = context.Set<StudentGroup>().Where(sG => sG.Name == "First grade").FirstOrDefault().Id;
+            var Teacher = context.Set<Teacher>().FirstOrDefault(t => t.UserName == "FirstTeacher");
+            var StudentGroup = context.Set<StudentGroup>().FirstOrDefault(sg => sg.Name == "First grade");
             for (int i = 1; i <= 1; i++)
             {
                 var crs = new Course()
                 {
                     Id = i,
                     Name = "Mathematics for first grade",
-                    TeacherId = TeacherId,
+                    TeacherId = Teacher.Id,
                     Room = i.ToString(),
-                    StudentsGroupId = StudentGroupId,
+                    StudentsGroupId = StudentGroup.Id,
+                    StudentGroup = StudentGroup,
+                    Teacher = Teacher
                 };
                 context.Set<Course>().AddOrUpdate(crs);
             }
