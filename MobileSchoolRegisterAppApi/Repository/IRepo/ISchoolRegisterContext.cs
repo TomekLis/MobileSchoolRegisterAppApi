@@ -22,5 +22,6 @@ namespace Repository.IRepo
         DbSet<Teacher> Teachers { get; set; }
         int SaveChanges();
         Database Database { get; }
+        DbEntityEntry Entry(object entity);
     }
 }

@@ -21,6 +21,11 @@ namespace MobileSchoolRegisterAppApi
             container.RegisterType<ICourseRepo, CourseRepo>();
             container.RegisterType<ITeacherRepo, TeacherRepo>();
             container.RegisterType<IStudentRepo, StudentRepo>();
+            container.RegisterType<ICourseRepo, CourseRepo>();
+            container.RegisterType<IMarkRepo, MarkRepo>();
+            container.RegisterType<ILessonRepo, LessonRepo>();
+            container.RegisterType<IAttendanceRepo, AttendanceRepo>();
+
             container.RegisterType<ISchoolRegisterContext, SchoolRegisterContext>();
             // e.g. container.RegisterType<ITestService, TestService>();
 

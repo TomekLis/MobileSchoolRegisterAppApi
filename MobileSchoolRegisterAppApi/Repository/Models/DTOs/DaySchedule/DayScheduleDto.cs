@@ -7,8 +7,8 @@ namespace Repository.Models.DTOs.DaySchedule
 
         public int Id { get; set; }
         public Day Day { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public DateTime? StartTime { get; set; }
+        public DateTime? EndTime { get; set; }
 
     }
 }

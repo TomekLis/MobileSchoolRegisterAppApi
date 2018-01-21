@@ -17,7 +17,6 @@ using Repository.Models.DTOs.StudentActivity;
 
 namespace MobileSchoolRegisterAppApi.Controllers
 {
-    [Authorize]
     public class LessonsController : ApiController
     {
         private readonly ILessonRepo _repo;
@@ -79,7 +78,6 @@ namespace MobileSchoolRegisterAppApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             _repo.AddLesson(lesson);
             _repo.SaveChanges();
 

@@ -1,11 +1,13 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using Microsoft.AspNet.Identity.EntityFramework;
 using MobileSchoolRegisterAppApi.Tests.TestDbSets;
 using Repository.IRepo;
 using Repository.Models;
 
 namespace MobileSchoolRegisterAppApi.Tests.Contexts
 {
-    class TestSchoolRegisterContext : ISchoolRegisterContext
+    class TestSchoolRegisterContext : IdentityDbContext, ISchoolRegisterContext
     {
         public TestSchoolRegisterContext()
         {
@@ -29,11 +31,5 @@ namespace MobileSchoolRegisterAppApi.Tests.Contexts
         public DbSet<StudentActivity> StudentActivities { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public int SaveChangesCount { get; private set; }
-        public int SaveChanges()
-        {
-            return 0;
-        }
-
-        public Database Database { get; }
     }
 }

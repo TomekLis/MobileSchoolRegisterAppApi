@@ -13,7 +13,7 @@ namespace Repository.IRepo
         Lesson GetLessonById(int id);
         void DeleteLesson(int id);
         void SaveChanges();
-        void AddLesson(Lesson lesson);
+        void AddLesson(Lesson passedLesson);
         void MarkAsModified(Lesson lesson);
     }
 }

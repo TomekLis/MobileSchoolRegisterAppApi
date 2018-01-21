@@ -52,7 +52,7 @@ namespace Repository.Repo
 
         public void MarkAsModified(Student student)
         {
-            Entry(student).State = EntityState.Modified;
+            _db.Entry(student).State = EntityState.Modified;
         }
 
     }

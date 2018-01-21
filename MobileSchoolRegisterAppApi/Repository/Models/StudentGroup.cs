@@ -17,7 +17,7 @@ namespace Repository.Models
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-        [Range(1,8)]
+        [Range(0,8)]
         public int Grade { get; set; }
         public virtual ICollection<Student> Students { get; set; }
         public virtual ICollection<Course> Courses { get; set; }

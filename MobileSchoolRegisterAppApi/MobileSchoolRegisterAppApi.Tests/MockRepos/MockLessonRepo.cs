@@ -29,7 +29,7 @@ namespace MobileSchoolRegisterAppApi.Tests.MockRepos
 
         public void SaveChanges() { }
 
-        public void AddLesson(Lesson lesson) { }
+        public void AddLesson(Lesson passedLesson) { }
 
         public void MarkAsModified(Lesson lesson) { }
     }

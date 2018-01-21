@@ -177,7 +177,7 @@ namespace MobileSchoolRegisterAppApi.Controllers
                 return NotFound();
             }
             Course courseEntity = _repo.GetCourseById(id);
-
+            Student student = new Student();
             var students = courseEntity.StudentGroup.Students.Select(s => new StudentBasicDto()
             {
                 Id = s.Id,

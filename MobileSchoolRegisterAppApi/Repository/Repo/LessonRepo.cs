@@ -40,15 +40,31 @@ namespace Repository.Repo
             _db.SaveChanges();
         }
 
-        public void AddLesson(Lesson lesson)
+        public void AddLesson(Lesson passedLesson)
         {
-            _db.Lessons.Add(lesson);
+            Lesson lesson = new Lesson();
+            if (passedLesson.Course?.Id !=null)
+            {
+                lesson.Course = _db.Courses.Find(passedLesson.Course.Id);
+                _db.Lessons.Add(lesson);
+
+                foreach (var passedStudent in passedLesson.Course.StudentGroup.Students)
+                {
+                    var attendance = new Attendance();
+                    attendance.WasPresent = passedStudent.Attendances.FirstOrDefault() != null ? passedStudent.Attendances.FirstOrDefault().WasPresent : false;
+                    var student = _db.Students.Find(passedStudent.Id);
+                    attendance.Student = student;
+                    attendance.Lesson = lesson;
+                    _db.Attendances.Add(attendance);
+                    _db.SaveChanges();
+                }
+            }
         }
 
 
         public void MarkAsModified(Lesson lesson)
         {
-            Entry(lesson).State = EntityState.Modified;
+            _db.Entry(lesson).State = EntityState.Modified;
         }
     }
 }

@@ -153,6 +153,14 @@
     <Compile Include="Migrations\201801200127323_CourseDataExtension.Designer.cs">
       <DependentUpon>201801200127323_CourseDataExtension.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801201938221_Model-Adjustement.cs" />
+    <Compile Include="Migrations\201801201938221_Model-Adjustement.Designer.cs">
+      <DependentUpon>201801201938221_Model-Adjustement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801202153229_nullable-datetime.cs" />
+    <Compile Include="Migrations\201801202153229_nullable-datetime.Designer.cs">
+      <DependentUpon>201801202153229_nullable-datetime.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attendance.cs" />
     <Compile Include="Models\Contexts\SchoolRegisterContext.cs" />
@@ -197,6 +205,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201801200127323_CourseDataExtension.resx">
       <DependentUpon>201801200127323_CourseDataExtension.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801201938221_Model-Adjustement.resx">
+      <DependentUpon>201801201938221_Model-Adjustement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801202153229_nullable-datetime.resx">
+      <DependentUpon>201801202153229_nullable-datetime.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

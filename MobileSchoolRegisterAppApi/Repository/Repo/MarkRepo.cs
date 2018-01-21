@@ -45,7 +45,7 @@ namespace Repository.Repo
         }
         public void MarkAsModified(Mark mark)
         {
-            Entry(mark).State = EntityState.Modified;
+            _db.Entry(mark).State = EntityState.Modified;
         }
     }
 }

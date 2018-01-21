@@ -47,7 +47,7 @@ namespace Repository.Repo
 
         public void MarkAsModified(Course course)
         {
-            Entry(course).State = EntityState.Modified;
+            _db.Entry(course).State = EntityState.Modified;
         }
     }
 }
