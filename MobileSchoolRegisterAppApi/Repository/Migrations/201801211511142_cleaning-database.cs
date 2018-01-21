@@ -3,7 +3,7 @@ namespace Repository.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class FirstMigrationCorrect : DbMigration
+    public partial class cleaningdatabase : DbMigration
     {
         public override void Up()
         {
@@ -13,25 +13,31 @@ namespace Repository.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         LessonId = c.Int(nullable: false),
-                        StudentId = c.String(maxLength: 128),
                         WasPresent = c.Boolean(),
                         MarkValue = c.Int(),
                         Importance = c.Int(),
                         Discriminator = c.String(nullable: false, maxLength: 128),
+                        Student_Id = c.String(maxLength: 128),
+                        Student_Id1 = c.String(maxLength: 128),
+                        Student_Id2 = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.Student_Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.Student_Id1)
                 .ForeignKey("dbo.Lesson", t => t.LessonId)
-                .ForeignKey("dbo.AspNetUsers", t => t.StudentId)
+                .ForeignKey("dbo.AspNetUsers", t => t.Student_Id2)
                 .Index(t => t.LessonId)
-                .Index(t => t.StudentId);
+                .Index(t => t.Student_Id)
+                .Index(t => t.Student_Id1)
+                .Index(t => t.Student_Id2);
             
             CreateTable(
                 "dbo.Lesson",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Date = c.DateTime(nullable: false),
-                        CourseId = c.Int(nullable: false),
+                        Date = c.DateTime(),
+                        CourseId = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Course", t => t.CourseId)
@@ -60,8 +66,8 @@ namespace Repository.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Day = c.Int(nullable: false),
-                        StartTime = c.DateTime(nullable: false),
-                        EndTime = c.DateTime(nullable: false),
+                        StartTime = c.DateTime(),
+                        EndTime = c.DateTime(),
                         CourseId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
@@ -83,6 +89,8 @@ namespace Repository.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
+                        FirstName = c.String(),
+                        LastName = c.String(),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
@@ -94,9 +102,8 @@ namespace Repository.Migrations
                         LockoutEnabled = c.Boolean(nullable: false),
                         AccessFailedCount = c.Int(nullable: false),
                         UserName = c.String(nullable: false, maxLength: 256),
-                        FirstName = c.String(),
-                        LastName = c.String(),
                         StudentsGroupId = c.Int(),
+                        Age = c.Int(),
                         Discriminator = c.String(nullable: false, maxLength: 128),
                         StudentGroup_Id = c.Int(),
                     })
@@ -161,12 +168,14 @@ namespace Repository.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.StudentActivity", "StudentId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.StudentActivity", "Student_Id2", "dbo.AspNetUsers");
             DropForeignKey("dbo.StudentActivity", "LessonId", "dbo.Lesson");
-            DropForeignKey("dbo.Lesson", "CourseId", "dbo.Course");
             DropForeignKey("dbo.Course", "TeacherId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Course", "StudentGroup_Id", "dbo.StudentGroup");
             DropForeignKey("dbo.AspNetUsers", "StudentGroup_Id", "dbo.StudentGroup");
+            DropForeignKey("dbo.StudentActivity", "Student_Id1", "dbo.AspNetUsers");
+            DropForeignKey("dbo.StudentActivity", "Student_Id", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Course", "StudentGroup_Id", "dbo.StudentGroup");
+            DropForeignKey("dbo.Lesson", "CourseId", "dbo.Course");
             DropForeignKey("dbo.DaySchedule", "CourseId", "dbo.Course");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
@@ -179,7 +188,9 @@ namespace Repository.Migrations
             DropIndex("dbo.Course", new[] { "StudentGroup_Id" });
             DropIndex("dbo.Course", new[] { "TeacherId" });
             DropIndex("dbo.Lesson", new[] { "CourseId" });
-            DropIndex("dbo.StudentActivity", new[] { "StudentId" });
+            DropIndex("dbo.StudentActivity", new[] { "Student_Id2" });
+            DropIndex("dbo.StudentActivity", new[] { "Student_Id1" });
+            DropIndex("dbo.StudentActivity", new[] { "Student_Id" });
             DropIndex("dbo.StudentActivity", new[] { "LessonId" });
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.AspNetUserRoles");

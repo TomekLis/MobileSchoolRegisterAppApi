@@ -47,13 +47,13 @@ namespace Repository.Migrations
 
         private void SeedDaySchedules(SchoolRegisterContext context)
         {
-            var CourseId = context.Set<Course>().FirstOrDefault(t => t.Name == "Mathematics for first grade").Id;
-            for (int i = 1; i <= 1; i++)
+            var CourseId = context.Set<Course>().FirstOrDefault(t => t.Name == "Maths").Id;
+            for (int i = 1; i <= 5; i++)
             {
                 var daySchedule = new DaySchedule()
                 {
                     Id = i,
-                    Day = Day.Monday,
+                    Day = GetDay(i),
                     StartTime = DateTime.Now,
                     EndTime = DateTime.Now.AddHours(1),
                     CourseId = CourseId
@@ -63,18 +63,43 @@ namespace Repository.Migrations
             context.SaveChanges();
         }
 
+        private DayOfWeek GetDay(int i)
+        {
+            switch (i)
+            {
+                case 1:
+                    return DayOfWeek.Monday;
+                    break;
+                case 2:
+                    return DayOfWeek.Tuesday;
+                    break;
+                case 3:
+                    return DayOfWeek.Wednesday;
+                    break;
+                case 4:
+                    return DayOfWeek.Thursday;
+                    break;
+                case 5:
+                    return DayOfWeek.Friday;
+                    break;
+                default:
+                    return DayOfWeek.Friday;
+                    break;
+            }
+        }
+
         //TODO: experiment a bit on that(inheritance)
         private void SeedStudentActivities(SchoolRegisterContext context)
         {
-            var StudentId = context.Set<Student>().FirstOrDefault(s => s.FirstName == "Andy hello").Id;
-            var LessonId = context.Set<Lesson>().FirstOrDefault(t => t.Id == 1).Id;
+            var Student = context.Set<Student>().FirstOrDefault(s => s.FirstName == "Andy");
+            var Lesson = context.Set<Lesson>().FirstOrDefault(t => t.Id == 1);
             for (int i = 1; i <= 1; i++)
             {
                 var mark = new Mark()
                 {
                     Id = i,
-                    LessonId = LessonId,
-                    StudentId = StudentId,
+                    Student = Student,
+                    Lesson = Lesson,
                     MarkValue = MarkValue.A,
                     Importance = Importance.ClassExam
                 };
@@ -85,9 +110,10 @@ namespace Repository.Migrations
                 var attendance = new Attendance()
                 {
                     Id = i,
-                    LessonId = LessonId,
-                    StudentId = StudentId,
+                    Student = Student,
+                    Lesson = Lesson,
                     WasPresent = true,
+
                 };
                 context.Set<Attendance>().AddOrUpdate(attendance);
             }
@@ -101,14 +127,26 @@ namespace Repository.Migrations
             var manager = new UserManager<Student>(store);
             if (!context.Users.Any(u => u.UserName == "FirstStudent"))
             {
-                var user = new Student() { UserName = "FirstStudent", FirstName = "Andy hello", LastName = "Kowalski", StudentGroup = studentGroup, StudentsGroupId = studentGroup.Id};
+                var user = new Student() { UserName = "FirstStudent", FirstName = "Andy", LastName = "Kowalski", StudentGroup = studentGroup, StudentsGroupId = studentGroup.Id};
                 var adminresult = manager.Create(user, "1234Abc");
             }
+            if (!context.Users.Any(u => u.UserName == "SecondStudent"))
+            {
+                var user = new Student() { UserName = "SecondStudent", FirstName = "John", LastName = "Doe", StudentGroup = studentGroup, StudentsGroupId = studentGroup.Id };
+                var adminresult = manager.Create(user, "1234Abc");
+            }
+            if (!context.Users.Any(u => u.UserName == "ThirdStudent"))
+            {
+                var user = new Student() { UserName = "ThirdStudent", FirstName = "Jane", LastName = "Doe", StudentGroup = studentGroup, StudentsGroupId = studentGroup.Id };
+                var adminresult = manager.Create(user, "1234Abc");
+            }
+
+
         }
 
         private void SeedLessons(SchoolRegisterContext context)
         {
-            var CourseId = context.Set<Course>().FirstOrDefault(t => t.Name == "Mathematics for first grade").Id;
+            var CourseId = context.Set<Course>().FirstOrDefault(t => t.Name == "Maths").Id;
             for (int i = 1; i <= 1; i++)
             {
                 var lesson = new Lesson()
@@ -152,12 +190,12 @@ namespace Repository.Migrations
         {
             var Teacher = context.Set<Teacher>().FirstOrDefault(t => t.UserName == "FirstTeacher");
             var StudentGroup = context.Set<StudentGroup>().FirstOrDefault(sg => sg.Name == "First grade");
-            for (int i = 1; i <= 1; i++)
+            for (int i = 1; i <= 5; i++)
             {
                 var crs = new Course()
                 {
                     Id = i,
-                    Name = "Mathematics for first grade",
+                    Name = GetCourseName(i),
                     TeacherId = Teacher.Id,
                     Room = i.ToString(),
                     StudentsGroupId = StudentGroup.Id,
@@ -167,6 +205,32 @@ namespace Repository.Migrations
                 context.Set<Course>().AddOrUpdate(crs);
             }
             context.SaveChanges();
+        }
+
+        private string GetCourseName(int i)
+        {
+            switch (i)
+            {
+                case 1:
+                    return "Maths";
+                    break;
+                case 2:
+                    return "Literature";
+                    break;
+                case 3:
+                    return "Spanish";
+                    break;
+                case 4:
+                    return "PE";
+                    break;
+                case 5:
+                    return "Science";
+                    break;
+                default:
+                    return "Whatever";
+                    break;
+            }
+
         }
     }
 }

@@ -8,10 +8,16 @@ namespace Repository.Models
 {
     public class Student : User
     {
+        public Student()
+        {
+            this.Marks = new HashSet<Mark>();
+            this.Attendances = new HashSet<Attendance>();
+        }
+
         public int? StudentsGroupId { get; set; }
         public virtual StudentGroup StudentGroup{ get; set; }
         public int? Age { get; set; }
-        public ICollection<Mark> Marks { get; set; }
-        public ICollection<Attendance> Attendances { get; set; }
+        public virtual ICollection<Mark> Marks { get; set; }
+        public virtual ICollection<Attendance> Attendances { get; set; }
     }
 }

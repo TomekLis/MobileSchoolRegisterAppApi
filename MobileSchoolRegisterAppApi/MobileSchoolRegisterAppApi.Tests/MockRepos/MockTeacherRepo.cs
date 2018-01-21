@@ -26,6 +26,31 @@ namespace MobileSchoolRegisterAppApi.Tests.MockRepos
             return _db.Teachers.Find(id);
         }
 
+        public IEnumerable<Student> GetTeacherStudents(Teacher teacher)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<Mark> GetStudentMarks(string studentId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<Attendance> GetStudentAttendances(string studentId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<Mark> GetStudentMarks(Student student)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<Attendance> GetStudentAttendances(Student student)
+        {
+            throw new NotImplementedException();
+        }
+
         public void DeleteTeacher(string id)
         {        }
 
@@ -37,5 +62,9 @@ namespace MobileSchoolRegisterAppApi.Tests.MockRepos
         {
         }
 
+        IQueryable<Student> ITeacherRepo.GetTeacherStudents(Teacher teacher)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

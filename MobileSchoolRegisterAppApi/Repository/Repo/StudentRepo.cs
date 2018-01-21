@@ -25,6 +25,7 @@ namespace Repository.Repo
 
         public Student GetStudentById(string id)
         {
+            _db.Students.Include(x => x.Attendances);
             Student student = _db.Students.Find(id);
             return student;
         }
@@ -38,7 +39,7 @@ namespace Repository.Repo
 
         private void DeleteRelatedStudentActivities(string id)
         {
-            var list = _db.StudentActivities.Where(sa => sa.StudentId == id);
+            var list = _db.StudentActivities.Where(sa => sa.Student.Id == id);
             foreach (var activity in list)
             {
                 _db.StudentActivities.Remove(activity);

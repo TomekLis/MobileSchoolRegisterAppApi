@@ -12,8 +12,11 @@ using Microsoft.AspNet.Identity;
 using Repository.IRepo;
 using Repository.Models;
 using Repository.Models.Contexts;
+using Repository.Models.DTOs.Attendance;
 using Repository.Models.DTOs.Course;
 using Repository.Models.DTOs.DaySchedule;
+using Repository.Models.DTOs.Lesson;
+using Repository.Models.DTOs.Mark;
 using Repository.Models.DTOs.Student;
 
 namespace MobileSchoolRegisterAppApi.Controllers
@@ -138,6 +141,46 @@ namespace MobileSchoolRegisterAppApi.Controllers
                     })
                 });
             return Ok(courses);
+        }
+        [Route("students/GetStudentsByTeacherId/{id}")]
+        [ResponseType(typeof(IQueryable<StudentBasicDto>))]
+        public IHttpActionResult GetStudentsByTeacherId(string id)
+        {
+            if (!StudentExists(id))
+            {
+                return NotFound();
+            }
+            var s = _repo.GetStudentById(id);
+            var students = new StudentBasicDto()
+            {
+                Id = s.Id,
+                FirstName = s.FirstName,
+                LastName = s.LastName,
+                Email = s.Email,
+                UserName = s.UserName,
+                PhoneNumber = s.PhoneNumber,
+                Marks = s.Marks?.Select(m => new MarkDto()
+                {
+                    Importance = m.Importance,
+                    MarkValue = m.MarkValue,
+                    Lesson = new LessonDto()
+                    {
+                        Id = m.Lesson?.Id,
+                        Date = m.Lesson?.Date
+                    }
+                }),
+                Attendances = s.Attendances?.Select(a => new AttendanceDto()
+                {
+                    Id = a.Id,
+                    WasPresent = a.WasPresent,
+                    Lesson = new LessonDto()
+                    {
+                        Id = a.Lesson?.Id,
+                        Date = a.Lesson?.Date
+                    }
+                })
+            };
+            return Ok(students);
         }
 
         private bool StudentExists(string id)

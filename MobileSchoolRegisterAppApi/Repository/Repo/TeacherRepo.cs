@@ -8,7 +8,7 @@ using Repository.Models;
 
 namespace Repository.Repo
 {
-    public class TeacherRepo :DbContext, ITeacherRepo
+    public class TeacherRepo : DbContext, ITeacherRepo
     {
         private readonly ISchoolRegisterContext _db;
 
@@ -26,6 +26,19 @@ namespace Repository.Repo
             Teacher teacher = _db.Teachers.Find(id);
             return teacher;
         }
+
+        public IEnumerable<Student> GetTeacherStudents(Teacher teacher)
+        {
+            var students = from s in _db.Students
+                           join sg in _db.StudentGroups on s.StudentGroup.Id equals sg.Id
+                           join dbCourse in _db.Courses on sg.Id equals dbCourse.StudentGroup.Id
+                           join dbTeacher in _db.Teachers on dbCourse.Teacher.Id equals dbTeacher.Id
+                           where dbTeacher.Id == teacher.Id
+                           select s;
+            
+            return students.Distinct();
+        }
+
 
         public void DeleteTeacher(string id)
         {

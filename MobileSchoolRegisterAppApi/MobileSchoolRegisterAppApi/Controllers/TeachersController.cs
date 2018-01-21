@@ -13,8 +13,13 @@ using Microsoft.AspNet.Identity;
 using Repository.IRepo;
 using Repository.Models;
 using Repository.Models.Contexts;
+using Repository.Models.DTOs.Attendance;
 using Repository.Models.DTOs.Course;
 using Repository.Models.DTOs.DaySchedule;
+using Repository.Models.DTOs.Lesson;
+using Repository.Models.DTOs.Mark;
+using Repository.Models.DTOs.Student;
+using Repository.Models.DTOs.StudentActivity;
 using Repository.Models.DTOs.Teacher;
 using WebGrease.Css.Extensions;
 
@@ -24,10 +29,15 @@ namespace MobileSchoolRegisterAppApi.Controllers
     public class TeachersController : ApiController
     {
         private readonly ITeacherRepo _repo;
+        private readonly IAttendanceRepo _attendanceRepo;
+        private readonly IMarkRepo _markRepo;
 
-        public TeachersController(ITeacherRepo repo)
+
+        public TeachersController(ITeacherRepo repo, IAttendanceRepo attendanceRepo, IMarkRepo markRepo)
         {
             _repo = repo;
+            _attendanceRepo = attendanceRepo;
+            _markRepo = markRepo;
         }
 
 
@@ -58,7 +68,22 @@ namespace MobileSchoolRegisterAppApi.Controllers
                 FirstName = teacherEntity.FirstName,
                 LastName = teacherEntity.LastName,
                 Email = teacherEntity.Email,
-                PhoneNumber = teacherEntity.PhoneNumber
+                PhoneNumber = teacherEntity.PhoneNumber,
+                UpcomingCourses = teacherEntity.Courses.Select(c => new CourseDto()
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    StudentsGroupId = c.StudentsGroupId,
+                    Room = c.Room,
+                    TeacherId = c.TeacherId,
+                    DaySchedules = c.DaySchedules.Select(d => new DayScheduleDto()
+                    {
+                        Day = d.Day,
+                        Id = d.Id,
+                        EndTime = d.EndTime,
+                        StartTime = d.StartTime
+                    })
+                })
             };
 
             return Ok(teacher);
@@ -88,7 +113,7 @@ namespace MobileSchoolRegisterAppApi.Controllers
             }
             _repo.MarkAsModified(teacher);
             _repo.SaveChanges();
-            
+
             return Ok(teacher);
         }
 
@@ -146,6 +171,96 @@ namespace MobileSchoolRegisterAppApi.Controllers
             return Ok(courses);
         }
 
+        [Route("teachers/GetStudentsByTeacherId/{id}")]
+        [ResponseType(typeof(IQueryable<CourseDto>))]
+        public IHttpActionResult GetStudentsByTeacherId(string id)
+        {
+            if (!TeacherExists(id))
+            {
+                return NotFound();
+            }
+            if (!HasAccesToTeacher(id))
+            {
+                return ResponseMessage(new HttpResponseMessage(HttpStatusCode.Forbidden));
+            }
+            Teacher teacherEntity = _repo.GetTeacherById(id);
+
+            if (teacherEntity == null)
+            {
+                return NotFound();
+            }
+            var students = _repo.GetTeacherStudents(teacherEntity).Select(s => new StudentBasicDto()
+            {
+                Id = s.Id,
+                FirstName = s.FirstName,
+                LastName = s.LastName,
+                Email = s.Email,
+                UserName = s.UserName,
+                PhoneNumber = s.PhoneNumber
+            }
+            );
+            var attendances = _attendanceRepo.GetAttendances().ToList();
+            var marks = _markRepo.GetMarks().ToList();
+            
+            List<StudentBasicDto> studentList = students.ToList();
+            for (int i = 0; i < studentList.Count; i++)
+            {
+                var attendancesForStudent = new List<Attendance>();
+                var marksForStudent = new List<Mark>();
+
+                var studentBasicDto = studentList[i];
+                var studentAttendances = attendances.Where(a => a.Student.Id == studentBasicDto.Id).ToList();
+                attendancesForStudent.AddRange(studentAttendances);
+                studentBasicDto.Attendances = attendancesForStudent.Select(a => new AttendanceDto()
+                {
+                    Id = a.Id,
+                    WasPresent = a.WasPresent,
+                    Lesson = new LessonDto()
+                    {
+                        Id = a.Lesson != null ? a.Lesson.Id : (int?)null,
+                        Date = a.Lesson != null ? a.Lesson.Date : (DateTime?)null
+                    }
+                }).ToList();
+                var studentMarks = marks.Where(a => a.Student.Id == studentBasicDto.Id).ToList();
+                marksForStudent.AddRange(studentMarks);
+                studentBasicDto.Marks = marksForStudent.Select(m => new MarkDto()
+                {
+                    Id = m.Id,
+                    Importance = m.Importance,
+                    MarkValue = m.MarkValue,
+                    Lesson = new LessonDto()
+                    {
+                        Id = m.Lesson != null ? m.Lesson.Id : (int?) null,
+                        Date = m.Lesson != null ? m.Lesson.Date : (DateTime?) null
+                    }
+                }).ToList();
+
+                studentList[i] = studentBasicDto;
+                
+            }
+            
+            //s.Marks = _repo.GetStudentMarks(s).Select(m => new MarkDto()
+            //    {
+            //        Importance = m.Importance,
+            //        MarkValue = m.MarkValue,
+            //        Lesson = new LessonDto()
+            //        {
+            //            Id = m.Lesson != null ? m.Lesson.Id : (int?)null,
+            //            Date = m.Lesson != null ? m.Lesson.Date : (DateTime?)null
+            //        }
+            //    }),
+              //s.Attendances = _attendanceRepo.GetAttendances()/*.Where(x=> x.Student.Id == s.Id)*/.Select(a => new AttendanceDto()
+              //  {
+              //      Id = a.Id,
+              //      WasPresent = a.WasPresent,
+              //      Lesson = new LessonDto()
+              //      {
+              //          Id = a.Lesson != null ? a.Lesson.Id : (int?)null,
+              //          Date = a.Lesson != null ? a.Lesson.Date : (DateTime?)null
+              //      }
+              //  }));
+            return Ok(studentList);
+        }
         private bool TeacherExists(string id)
         {
             return _repo.GeTeachers().Count(e => e.Id == id) > 0;

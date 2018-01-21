@@ -133,33 +133,9 @@
     <Compile Include="IRepo\ISchoolRegisterContext.cs" />
     <Compile Include="IRepo\IStudentRepo.cs" />
     <Compile Include="IRepo\ITeacherRepo.cs" />
-    <Compile Include="Migrations\201710192141455_FirstMigrationCorrect.cs" />
-    <Compile Include="Migrations\201710192141455_FirstMigrationCorrect.Designer.cs">
-      <DependentUpon>201710192141455_FirstMigrationCorrect.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710192214034_Age-Student-New-Field.cs" />
-    <Compile Include="Migrations\201710192214034_Age-Student-New-Field.Designer.cs">
-      <DependentUpon>201710192214034_Age-Student-New-Field.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201712232231251_LessonAdjustementMigration.cs" />
-    <Compile Include="Migrations\201712232231251_LessonAdjustementMigration.Designer.cs">
-      <DependentUpon>201712232231251_LessonAdjustementMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801091813214_relation-Course-StudentGroup.cs" />
-    <Compile Include="Migrations\201801091813214_relation-Course-StudentGroup.Designer.cs">
-      <DependentUpon>201801091813214_relation-Course-StudentGroup.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801200127323_CourseDataExtension.cs" />
-    <Compile Include="Migrations\201801200127323_CourseDataExtension.Designer.cs">
-      <DependentUpon>201801200127323_CourseDataExtension.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801201938221_Model-Adjustement.cs" />
-    <Compile Include="Migrations\201801201938221_Model-Adjustement.Designer.cs">
-      <DependentUpon>201801201938221_Model-Adjustement.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201801202153229_nullable-datetime.cs" />
-    <Compile Include="Migrations\201801202153229_nullable-datetime.Designer.cs">
-      <DependentUpon>201801202153229_nullable-datetime.cs</DependentUpon>
+    <Compile Include="Migrations\201801211511142_cleaning-database.cs" />
+    <Compile Include="Migrations\201801211511142_cleaning-database.Designer.cs">
+      <DependentUpon>201801211511142_cleaning-database.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attendance.cs" />
@@ -191,29 +167,10 @@
     <Compile Include="Repo\TeacherRepo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201710192141455_FirstMigrationCorrect.resx">
-      <DependentUpon>201710192141455_FirstMigrationCorrect.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710192214034_Age-Student-New-Field.resx">
-      <DependentUpon>201710192214034_Age-Student-New-Field.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201712232231251_LessonAdjustementMigration.resx">
-      <DependentUpon>201712232231251_LessonAdjustementMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801091813214_relation-Course-StudentGroup.resx">
-      <DependentUpon>201801091813214_relation-Course-StudentGroup.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801200127323_CourseDataExtension.resx">
-      <DependentUpon>201801200127323_CourseDataExtension.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801201938221_Model-Adjustement.resx">
-      <DependentUpon>201801201938221_Model-Adjustement.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201801202153229_nullable-datetime.resx">
-      <DependentUpon>201801202153229_nullable-datetime.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201801211511142_cleaning-database.resx">
+      <DependentUpon>201801211511142_cleaning-database.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
