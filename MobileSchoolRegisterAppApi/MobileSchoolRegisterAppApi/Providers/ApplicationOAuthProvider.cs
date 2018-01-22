@@ -45,7 +45,7 @@ namespace MobileSchoolRegisterAppApi.Providers
             ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,
                 CookieAuthenticationDefaults.AuthenticationType);
 
-            AuthenticationProperties properties = CreateProperties(user.Id);
+            AuthenticationProperties properties = CreateProperties(user.Id, user.GetType());
             AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
             context.Validated(ticket);
             context.Request.Context.Authentication.SignIn(cookiesIdentity);
@@ -87,11 +87,12 @@ namespace MobileSchoolRegisterAppApi.Providers
             return Task.FromResult<object>(null);
         }
 
-        public static AuthenticationProperties CreateProperties(string userId)
+        public static AuthenticationProperties CreateProperties(string userId, Type type)
         {
             IDictionary<string, string> data = new Dictionary<string, string>
             {
-                { "userId", userId }
+                { "userId", userId },
+                { "type", type.ToString()}
             };
             return new AuthenticationProperties(data);
         }

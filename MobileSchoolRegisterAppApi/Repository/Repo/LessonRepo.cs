@@ -46,7 +46,9 @@ namespace Repository.Repo
             if (passedLesson.Course?.Id !=null)
             {
                 lesson.Course = _db.Courses.Find(passedLesson.Course.Id);
+                lesson.Date = DateTime.Today;
                 _db.Lessons.Add(lesson);
+                _db.SaveChanges();
 
                 foreach (var passedStudent in passedLesson.Course.StudentGroup.Students)
                 {

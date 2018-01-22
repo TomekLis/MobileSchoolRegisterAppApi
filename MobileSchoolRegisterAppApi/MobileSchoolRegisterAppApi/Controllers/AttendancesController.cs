@@ -62,12 +62,14 @@ namespace MobileSchoolRegisterAppApi.Controllers
 
         // PUT: api/Attendances/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult Put(int? id, Attendance attendance)
+        public IHttpActionResult Put(int? id, Attendance passedAttendance)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            var attendance = _repo.GetAttendanceById(passedAttendance.Id);
+            attendance.WasPresent = passedAttendance.WasPresent;
             if (id == null || id != attendance.Id)
             {
                 return BadRequest();
